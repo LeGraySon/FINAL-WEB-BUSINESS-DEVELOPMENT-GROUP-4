@@ -348,6 +348,12 @@
         });
 
     // 🧩 HỢP NHẤT DỮ LIỆU THEO ID
+    const localProducts = JSON.parse(localStorage.getItem("productList") || "[]");
+    if (localProducts.length > 0) {
+      console.log("📦 Loaded products from localStorage:", localProducts);
+      handleDataLoad(localProducts);
+      return; // Dừng ở đây, không fetch file JSON nữa
+    }
     Promise.all(normalizedSources.map(fetchSource))
       .then((datasets) => {
         const mergedRaw = datasets.flat().filter(Boolean);
@@ -471,6 +477,16 @@
         );
       }, 2000);
     }
+    window.addEventListener("productListUpdated", () => {
+      const updated = JSON.parse(localStorage.getItem("productList") || "[]");
+      if (updated.length > 0) {
+        console.log("🔁 Reloading products from localStorage after admin update");
+        handleDataLoad(updated);
+      } else {
+        console.log(" productList trống, không có gì để hiển thị.");
+      }
+    });
+
   }
 
   function compareNumbers(a, b) {

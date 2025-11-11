@@ -353,4 +353,31 @@
     els.invoicePrintBtn?.addEventListener("click", printInvoice);
     els.invoiceSaveBtn?.addEventListener("click", saveInvoice);
   });
+  const PRODUCT_STORAGE_KEY = "productList";
+
+  function getProductList() {
+    return JSON.parse(localStorage.getItem(PRODUCT_STORAGE_KEY)) || [];
+  }
+
+  function saveProductList(list) {
+    localStorage.setItem(PRODUCT_STORAGE_KEY, JSON.stringify(list));
+  }
+  function adminAddProduct(product) {
+    const list = getProductList();
+    product.id = Date.now(); 
+    list.push(product);
+    saveProductList(list);
+    alert(" Đã thêm sản phẩm!");
+    window.dispatchEvent(new Event("productListUpdated"));
+  }
+  function adminDeleteProduct(id) {
+    const list = getProductList().filter(p => p.id !== id);
+    saveProductList(list);
+    alert(" Đã xóa sản phẩm!");
+
+    window.dispatchEvent(new Event("productListUpdated"));
+  }
+
+  console.log("📦 Current products:", getProductList());
+
 })();
