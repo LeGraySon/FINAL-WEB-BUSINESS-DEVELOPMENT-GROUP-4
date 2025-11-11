@@ -195,8 +195,6 @@
     
     document.getElementById("totalAmount").textContent = "TOTAL: $" + order.total.toFixed(2);
     document.getElementById("barcodeText").textContent = order.id;
-
-    // Sinh mã QR thanh toán (giả định dùng api qrserver.com)
     const paymentText = `Avant Atelier Payment - Order ${order.id} - $${order.total.toFixed(2)}`;
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(paymentText)}`;
   document.getElementById("qrBox").innerHTML = `<img src="${qrUrl}" alt="QR Code">`;

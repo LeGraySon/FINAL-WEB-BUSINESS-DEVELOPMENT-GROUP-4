@@ -13,7 +13,6 @@ body {
   background-image: url('images/background\ texture.jpg');
 }
 
-/* ===== NAVBAR ===== */
 header {
   width: 100%;
   position: fixed;
@@ -723,7 +722,6 @@ section .cards .card {
   to { transform: translateY(0); opacity: 1; }
 }
 }
-/* ==== CENTERED IMAGE SLIDER (not fullscreen) ==== */
 .slider-container {
   position: relative;
   width: 80%;
@@ -783,7 +781,6 @@ section .cards .card {
 .prev { left: 15px; }
 .next { right: 15px; }
 
-/* Responsive */
 @media (max-width: 768px) {
   .slider-container {
     width: 95%;
@@ -792,7 +789,6 @@ section .cards .card {
     height: 300px;
   }
 }
-/* ==== FULLSCREEN STATIC IMAGE BANNER ==== */
 .mood-banner {
   position: relative;
   width: 100%;
@@ -821,13 +817,12 @@ section .cards .card {
   z-index: 2;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .mood-banner {
     height: 70vh;
   }
 }
-/* ==== FIX MENU OVERLAY & GAP ISSUE (FINALIZED) ==== */
 
 .all-links {
   position: fixed;
@@ -880,7 +875,6 @@ section .cards .card {
   pointer-events: all;
 }
 
-/* === FIX CLOSE BUTTON VISIBLE ON DESKTOP === */
 .all-links .close-btn {
   position: absolute;
   top: 15px;
@@ -900,7 +894,6 @@ section .cards .card {
   transform: scale(1.15);
   color: #ccc;
 }
-/* ===== FULLSCREEN ABOUT SECTION ===== */
 .about {
   position: relative;
   width: 100%;
@@ -976,8 +969,6 @@ section .cards .card {
   }
 }
 
-
-/* ===== ABOUT SECTION (VIDEO + DELAYED TEXT) ===== */
 .about {
   position: relative;
   width: 100%;
@@ -1051,7 +1042,6 @@ section .cards .card {
 .about-content h2, .about-content p, .about-content h3 {
   color: #fff !important; text-shadow: 0 2px 10px rgba(0,0,0,.8);
 }
-/* === SEARCH POPUP === */
 .search-popup {
   position: absolute;
   top: calc(100% + 12px);
