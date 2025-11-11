@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avant Atelier — Fashion Feed</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="auth.js" defer></script>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500&display=swap");
+
+    body.news-body {
+      color: #1f1f1f;
+      min-height: 100vh;
+    }
+
+    .news-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 140px 20px 90px;
+    }
+
+    .news-heading {
+      text-align: center;
+      margin-bottom: 42px;
+    }
+
+    .news-heading h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.3rem, 4vw, 3.2rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #111;
+      margin-bottom: 12px;
+    }
+
+    .news-heading p {
+      max-width: 720px;
+      margin: 0 auto;
+      color: #464646;
+      line-height: 1.6;
+      font-family: "Inter", sans-serif;
+    }
+
+    .feed-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+      margin-top: 40px;
+      text-align: left;
+    }
+
+    .feed-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.1);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .feed-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 26px 48px rgba(0, 0, 0, 0.18);
+    }
+
+    .feed-item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .feed-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .feed-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 22px 24px 30px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.78), transparent 70%);
+      color: #fff;
+      font-family: "Inter", sans-serif;
+    }
+
+    .feed-overlay h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.15rem;
+      margin: 0 0 6px;
+      line-height: 1.35;
+    }
+
+    .feed-overlay a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .feed-overlay a:hover {
+      text-decoration: underline;
+    }
+
+    .feed-overlay p {
+      font-size: 0.9rem;
+      margin: 0;
+      line-height: 1.5;
+      opacity: 0.92;
+    }
+
+    .feed-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      font-size: 1rem;
+      color: #555;
+      padding: 40px 0;
+      font-family: "Inter", sans-serif;
+    }
+
+    @media (max-width: 640px) {
+      .news-page {
+        padding-top: 120px;
+      }
+      .feed-item img {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body class="news-body">
+  <header class="landing-header" data-solid-start="true">
+    <nav class="navbar">
+      <input type="checkbox" id="menu-toggler" />
+      <label for="menu-toggler" id="hamburger-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+          <path d="M0 0h24v24H0z" fill="none" />
+          <path d="M3 18h18v-2H3v2zm0-5h18V11H3v2zm0-7v2h18V6H3z" />
+        </svg>
+      </label>
+
+      <h2 class="logo"><a href="index.html">AVANT ATELIER</a></h2>
+
+      <ul class="all-links" id="sideMenu">
+        <li class="close-btn">
+          <label for="menu-toggler" class="close-icon"><i class="fas fa-times"></i></label>
+        </li>
+        <li><a href="index.html#home">Home</a></li>
+        <li class="has-submenu">
+          <div class="submenu-header">
+            <a href="Products.html">Products</a>
+            <button class="submenu-control" type="button" aria-expanded="false" aria-label="Toggle products menu">
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </button>
+          </div>
+          <ul class="submenu">
+            <li><a href="top.html">Top</a></li>
+            <li><a href="bottom.html">Bottom</a></li>
+            <li><a href="accessories.html">Accessories</a></li>
+          </ul>
+        </li>
+        <li class="has-submenu inspiration-submenu">
+          <div class="submenu-header">
+            <a href="index.html#portfolio">Inspiration</a>
+            <button class="submenu-control" type="button" aria-expanded="false" aria-label="Toggle inspiration menu">
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </button>
+          </div>
+          <ul class="submenu">
+            <li><a href="news.html">News</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html#about">About Us</a></li>
+        <li><a href="index.html#contact">Help</a></li>
+      </ul>
+
+      <div class="right-icons">
+        <a
+          href="Signin.html"
+          id="userIconLink"
+          data-logged-in-href="profile.html"
+          data-logged-out-href="Signin.html"
+          data-logged-in-title="View profile"
+          data-logged-out-title="Sign in"
+        ><i class="fas fa-user"></i></a>
+        <a href="#" id="searchBtn"><i class="fas fa-search"></i></a>
+        <a href="shopping_cart.html"><i class="fas fa-shopping-cart" aria-hidden="true"></i></a>
+      </div>
+
+      <div class="search-popup" id="searchPopup">
+        <div class="search-box">
+          <button class="close-search" id="closeSearch">&times;</button>
+          <h3>Search</h3>
+          <div class="search-input">
+            <input type="text" id="searchInput" placeholder="Search products" />
+          </div>
+          <div id="searchResults" class="results-container"></div>
+        </div>
+      </div>
+
+      <script src="script.js"></script>
+      <script src="header.js"></script>
+
+      <label for="menu-toggler" class="menu-overlay"></label>
+    </nav>
+  </header>
+
+  <main class="news-page">
+    <div class="news-heading">
+      <h1>Harper’s Bazaar — Fashion Highlights</h1>
+      <p>The latest standout trends from Harper’s Bazaar, continuously updated to inspire the fashion community of Avant Atelier.</p>
+    </div>
+
+    <div id="feed-container" class="feed-container">
+      <div class="feed-empty">Loading News...</div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-col footer-brand">
+        <a class="footer-logo" href="index.html">AVANT ATELIER</a>
+        <p class="footer-tagline">
+          Contemporary wardrobe staples crafted with mindful detail and timeless silhouettes.
+        </p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="top.html">Tops</a></li>
+          <li><a href="bottom.html">Bottoms</a></li>
+          <li><a href="accessories.html">Accessories</a></li>
+          <li><a href="index.html#new">New Arrivals</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="shopping_cart.html">Shipping & Returns</a></li>
+          <li><a href="forgetpass.html">Track Order</a></li>
+          <li><a href="profile.html">My Account</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-contact">
+        <h4>Stay in touch</h4>
+        <p>Join our newsletter for studio updates, styling notes, and exclusive previews.</p>
+        <form class="footer-form" action="#" method="post">
+          <label class="sr-only" for="footer-email">Email</label>
+          <input id="footer-email" type="email" name="email" placeholder="you@example.com" autocomplete="email">
+          <button type="submit" aria-label="Submit email"></button>
+        </form>
+        <div class="footer-meta">
+          <a href="mailto:hello@avantatelier.com">hello@avantatelier.com</a>
+          <span>+84 28 1234 5678</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <nav>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="index.html#faq">FAQ</a>
+      </nav>
+      <span>&copy; <span data-footer-year></span> Avant Atelier. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script>
+    const RSS_URL = "https://rss2json.com/api.json?rss_url=https://www.harpersbazaar.com/rss/fashion.xml";
+
+    async function fetchFeed() {
+      const container = document.getElementById("feed-container");
+      try {
+        const res = await fetch(RSS_URL);
+        const data = await res.json();
+        const articles = data.items || [];
+
+        if (!articles.length) {
+          container.innerHTML = '<div class="feed-empty">Hiện chưa có bài viết mới.</div>';
+          return;
+        }
+
+        container.innerHTML = articles
+          .slice(0, 12)
+          .map(
+            (item) => `
+          <article class="feed-item">
+            <img src="${item.enclosure?.link || "https://via.placeholder.com/400x260?text=No+Image"}" alt="${item.title}">
+            <div class="feed-overlay">
+              <h3><a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3>
+              <p>${item.description.replace(/<[^>]*>?/gm, "").slice(0, 90)}...</p>
+            </div>
+          </article>
+        `
+          )
+          .join("");
+      } catch (err) {
+        container.innerHTML = '<div class="feed-empty" style="color:#b91c1c;">Không thể tải dữ liệu từ Harper’s Bazaar.</div>';
+      }
+    }
+
+    fetchFeed();
+  </script>
+  <script src="include-footer.js"></script>
+</body>
+</html>

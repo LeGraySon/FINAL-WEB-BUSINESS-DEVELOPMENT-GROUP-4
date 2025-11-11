@@ -1,0 +1,292 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign up</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="sign_style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <style>
+            body { 
+                background-image: url('images/background1.jpg');
+                background-position: center center;
+                background-size: cover;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0;
+                height: 100vh;
+            }
+            .signup-container {
+                margin-top: 0;
+                background: rgba(255, 255, 255, 0.6);
+                border-radius: 12px;
+                padding: 36px;
+                width: 100%;
+                max-width: 400px;
+                max-height: 660px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                backdrop-filter: blur(6px);
+            }
+            .signup-title {
+                font-size: 34px;
+                font-weight: bold;
+                margin-bottom: 20px;
+                color: #000;
+            }
+            .form-group input {
+                width: 100%;
+                padding: 14px;
+                margin-bottom: 12px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-size: 14px;
+                outline: none;
+                background: rgba(255, 255, 255, 0.9);
+                transition: all 0.2s ease;
+            }
+            .form-group input:focus {
+                border-color: #000;
+                box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+            }
+            .btn-submit {
+                width: 100%;
+                background-color: #000;
+                color: #fff;
+                border-radius: 8px;
+                margin-top: 8px;
+                letter-spacing: 0.5px;
+                padding: 12px 16px;
+                border: none;
+                cursor: pointer;
+                transition: background 0.2s ease;
+            }
+            .btn-submit:hover { background-color: #222; }
+            .sign-in-link {
+                margin-top: 16px;
+                font-size: 14px;
+                color: #000;
+            }
+            .sign-in-link a { color: #000; text-decoration: underline; }
+            .error { border-color: #e53935 !important; }
+            .error-icon { color: #e53935 !important; }
+            .icon-wrapper {
+                position: relative;
+            }
+            .icon-wrapper i {
+                position: absolute;
+                right: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #888;
+                cursor: pointer; 
+                z-index: 2;
+            }
+            input[type="password"]::-ms-reveal,
+            input[type="password"]::-ms-clear {
+                display: none;
+            }
+            input[type="password"]::-webkit-textfield-decoration-container,
+            input[type="password"]::-webkit-credentials-auto-fill-button {
+                display: none !important;
+            }
+            input[type="password"] {
+                -webkit-appearance: none;
+                appearance: none;
+            }
+            input::placeholder { color: #999; }
+        </style>
+
+        
+        <script>
+        const K = { USERS:'app_users', SESSION:'app_session', REMEMBER:'app_remember' };
+        const store = {
+          get(k, fb=null){ try{ return JSON.parse(localStorage.getItem(k)) ?? fb; }catch{return fb} },
+          set(k,v){ localStorage.setItem(k, JSON.stringify(v)); },
+          remove(k){ localStorage.removeItem(k); }
+        };
+        const uid = () => 'u_' + Math.random().toString(36).slice(2,10);
+        const encodePw = (s) => s; 
+
+        function users_all(){ return store.get(K.USERS, []); }
+        function users_find_by_email(email){ return users_all().find(u => u.email.toLowerCase() === email.toLowerCase()); }
+        function users_add({firstName,lastName,email,password}){
+          const users = users_all();
+          if (users_find_by_email(email)) return { ok:false, message:'Email already registered' };
+          const user = {
+            id: uid(),
+            firstName: (firstName||'').trim(),
+            lastName:  (lastName||'').trim(),
+            name: ((firstName||'') + ' ' + (lastName||'')).trim(),
+            email: email.trim(),
+            password: encodePw(password),
+            createdAt: Date.now()
+          };
+          users.push(user);
+          store.set(K.USERS, users);
+          return { ok:true, user };
+        }
+        function session_login(user){
+          const s = { userId:user.id, email:user.email, name:user.name||user.email, loginAt: Date.now() };
+          store.set(K.SESSION, s);
+          return s;
+        }
+        </script>
+    </head>
+    <body>
+        <div class="signup-container">
+            <div class="signup-title">Sign up</div>
+            <form id="signupForm">
+                <div class="form-group icon-wrapper">
+                    <input type="text" id="firstName" placeholder="First Name" />
+                    <i id="firstNameIcon" class="fa-regular fa-user"></i>
+                </div>
+                <div class="form-group icon-wrapper">
+                    <input type="text" id="lastName" placeholder="Last Name" />
+                    <i id="lastNameIcon" class="fa-regular fa-user"></i>
+                </div>
+                <div class="form-group icon-wrapper">
+                    <input type="email" id="email" placeholder="Email" />
+                    <i id="emailIcon" class="fa-regular fa-envelope"></i>
+                </div>
+                <div class="form-group icon-wrapper">
+                    <input type="password" id="password" placeholder="Password" />
+                    <i id="passwordIcon" class="fa-regular fa-eye-slash" title="Show password" aria-hidden="true"></i>
+                </div>
+                <button class="btn-submit" type="submit">Create an account</button>
+            </form>
+            <div class="sign-in-link">
+                Already have an account? <a href="Signin.html">Sign in</a>
+            </div>
+        </div>
+
+        
+        <script>
+            var form = document.getElementById('signupForm');
+            var firstName = document.getElementById('firstName');
+            var lastName  = document.getElementById('lastName');
+            var email     = document.getElementById('email');
+            var password  = document.getElementById('password');
+            var firstNameIcon = document.getElementById('firstNameIcon');
+            var lastNameIcon  = document.getElementById('lastNameIcon');
+            var emailIcon     = document.getElementById('emailIcon');
+                var passwordIcon  = document.getElementById('passwordIcon');
+
+            var originalPlaceholders = {
+                firstName: 'First Name',
+                lastName: 'Last Name',
+                email: 'Email',
+                password: 'Password'
+            };
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                clearErrors();
+                var isValid = true;
+
+                if (firstName.value.trim() === '') {
+                    showError('firstName', 'First name is required');
+                    isValid = false;
+                } 
+                if (lastName.value.trim() === '') {
+                    showError('lastName', 'Last name is required');
+                    isValid = false;
+                } 
+                if (email.value.trim() === '') {
+                    showError('email', 'Email is required');
+                    isValid = false;
+                } else if (!isValidEmail(email.value)) {
+                    showError('email', 'Invalid email format');
+                    isValid = false;
+                }
+                if (password.value === '') {
+                    showError('password', 'Password is required');
+                    isValid = false;
+                } else if (password.value.length < 6) {
+                    showError('password', 'Password must be at least 6 characters');
+                    isValid = false;
+                }
+
+                
+                if (isValid) {
+                    const res = users_add({
+                        firstName: firstName.value,
+                        lastName:  lastName.value,
+                        email:     email.value,
+                        password:  password.value
+                    });
+                    if (!res.ok) { showError('email', res.message); return; }
+                    session_login(res.user);
+                    window.location.href = 'index.html';
+                }
+            });
+
+            function showError(id, msg) {
+                var input = document.getElementById(id);
+                var icon = document.getElementById(id + 'Icon');
+                input.classList.add('error');
+                input.placeholder = msg;
+                icon.classList.add('error-icon');
+            }
+
+            function clearErrors() {
+                ['firstName', 'lastName', 'email', 'password'].forEach(function(id) {
+                    var input = document.getElementById(id);
+                    var icon = document.getElementById(id + 'Icon');
+                    input.classList.remove('error');
+                    input.placeholder = originalPlaceholders[id];
+                    icon.classList.remove('error-icon');
+                });
+            }
+
+            firstName.addEventListener('input', function() {
+                if (this.classList.contains('error')) {
+                    this.classList.remove('error');
+                    this.placeholder = originalPlaceholders.firstName;
+                    firstNameIcon.classList.remove('error-icon');
+                }
+            });
+            lastName.addEventListener('input', function() {
+                if (this.classList.contains('error')) {
+                    this.classList.remove('error');
+                    this.placeholder = originalPlaceholders.lastName;
+                    lastNameIcon.classList.remove('error-icon');
+                }
+            });
+            email.addEventListener('input', function() {
+                if (this.classList.contains('error')) {
+                    this.classList.remove('error');
+                    this.placeholder = originalPlaceholders.email;
+                    emailIcon.classList.remove('error-icon');
+                }
+            });
+            password.addEventListener('input', function() {
+                if (this.classList.contains('error')) {
+                    this.classList.remove('error');
+                    this.placeholder = originalPlaceholders.password;
+                    passwordIcon.classList.remove('error-icon');
+                }
+            });
+            passwordIcon.addEventListener('click', function() {
+                if (password.type === 'password') {
+                    password.type = 'text';
+                    passwordIcon.classList.remove('fa-eye-slash');
+                    passwordIcon.classList.add('fa-eye');
+                    passwordIcon.setAttribute('title', 'Hide password');
+                } else {
+                    password.type = 'password';
+                    passwordIcon.classList.remove('fa-eye');
+                    passwordIcon.classList.add('fa-eye-slash');
+                    passwordIcon.setAttribute('title', 'Show password');
+                }
+            });
+
+            function isValidEmail(email) {
+                var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(email);
+            }
+        </script>
+    </body>
+</html>
+

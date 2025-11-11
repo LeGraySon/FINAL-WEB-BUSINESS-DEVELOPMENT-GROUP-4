@@ -1,0 +1,280 @@
+[
+  {
+    "id": 1,
+    "name": "Basic Denim Shorts",
+    "price": 90,
+    "salePrice": 72,
+    "status": "available",
+    "image": "images/Bottom/Basic Denim Shorts.png",
+    "hoverImage": "images/Bottom/mau_Basic_Denim_Shorts.png",
+    "gallery": [
+      "images/Bottom/Basic Denim Shorts.png",
+      "images/Bottom/Basic Denim Shorts_dt_1.png",
+      "images/Bottom/Basic Denim Shorts_dt_2.png",
+      "images/Bottom/mau_Basic_Denim_Shorts.png"
+    ],
+    "description": "Classic denim shorts with a straight leg and mid-rise fit, crafted from washed cotton denim for comfort.",
+    "details": ["Washed 100% cotton denim", "Mid-rise, regular fit"],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Light Indigo"]
+  },
+  {
+    "id": 2,
+    "name": "Basic Trousers - Gray",
+    "price": 159,
+    "status": "available",
+    "image": "images/Bottom/Basic Trousers.png",
+    "hoverImage": "images/Bottom/mau_Basic_Trousers.png",
+    "gallery": [
+      "images/Bottom/Basic Trousers.png",
+      "images/Bottom/Basic Trousers_dt_1.png",
+      "images/Bottom/Basic Trousers_dt_2.png",
+      "images/Bottom/mau_Basic_Trousers.png"
+    ],
+    "description": "Tailored gray trousers with a neat taper and structured waistband for everyday smart wear.",
+    "details": ["Mid-weight twill blend", "Front pleats with clean crease"],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Gray"]
+  },
+  {
+    "id": 3,
+    "name": "Black Denim Pants",
+    "price": 89,
+    "salePrice": 74,
+    "status": "available",
+    "image": "images/Bottom/Black Denim Pants.png",
+    "hoverImage": "images/Bottom/mau_Black_Denim_Pants.png",
+    "gallery": [
+      "images/Bottom/Black Denim Pants.png",
+      "images/Bottom/Black Denim Pants_dt_1.png",
+      "images/Bottom/Black Denim Pants_dt_2.png",
+      "images/Bottom/mau_Black_Denim_Pants.png"
+    ],
+    "description": "Everyday straight denim pants in deep black with classic 5-pocket design.",
+    "details": ["Enzyme washed denim", "Button fly and metal rivets"],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Black"]
+  },
+  {
+    "id": 4,
+    "name": "Bootcut Denim Pants",
+    "price": 129,
+    "status": "available",
+    "image": "images/Bottom/Bootcut Denim Pants.png",
+    "hoverImage": "images/Bottom/mau_Bootcut_Denim_Pants.png",
+    "gallery": [
+      "images/Bottom/Bootcut Denim Pants.png",
+      "images/Bottom/Bootcut Denim Pants_dt_1.png",
+      "images/Bottom/Bootcut Denim Pants_dt_2.png",
+      "images/Bottom/mau_Bootcut_Denim_Pants.png"
+    ],
+    "description": "Mid-rise bootcut denim featuring a subtle flare for a balanced silhouette.",
+    "details": ["Comfort-stretch fabric", "Reinforced hemline"],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Dark Indigo"]
+  },
+  {
+    "id": 5,
+    "name": "Brown Baggy Denim Pants",
+    "price": 145,
+    "status": "available",
+    "image": "images/Bottom/Brown Baggy Denim Pants.png",
+    "hoverImage": "images/Bottom/mau_Brown_Baggy_Denim_Pants.png",
+    "gallery": [
+      "images/Bottom/Brown Baggy Denim Pants.png",
+      "images/Bottom/Brown Baggy Denim Pants_dt_1.png",
+      "images/Bottom/Brown Baggy Denim Pants_dt_2.png",
+      "images/Bottom/mau_Brown_Baggy_Denim_Pants.png"
+    ],
+    "description": "Relaxed-fit baggy denim with generous leg width and washed brown tone for everyday comfort.",
+    "details": ["Wide fit with belt loops", "Heavyweight cotton denim"],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Brown"]
+  },
+  {
+    "id": 6,
+    "name": "Felt Shorts",
+    "price": 145,
+    "status": "available",
+    "image": "images/Bottom/Felt Shorts.png",
+    "hoverImage": "images/Bottom/mau_Felt_Shorts.png",
+    "gallery": [
+      "images/Bottom/Felt Shorts.png",
+      "images/Bottom/Felt Shorts_dt_1.png",
+      "images/Bottom/Felt Shorts_dt_2.png",
+      "images/Bottom/mau_Felt_Shorts.png"
+    ],
+    "description": "Minimal felt shorts with structured silhouette and soft texture for smart casual looks.",
+    "details": ["Elastic waistband with drawcord", "Hidden side pockets"],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Gray"]
+  },
+  {
+    "id": 7,
+    "name": "Flared Denim Pants",
+    "price": 145,
+    "status": "sold-out",
+    "image": "images/Bottom/Flared Denim Pants.jpg",
+    "hoverImage": "images/Bottom/mau_Flared_Denim_Pants.png",
+    "gallery": ["images/Bottom/mau_Flared_Denim_Pants.png"],
+    "description": "Retro-inspired flared jeans with high-rise waist and subtle stretch for movement.",
+    "details": ["High-stretch denim fabric", "Clean back yoke for smooth shape"],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Indigo"]
+  },
+  {
+    "id": 8,
+    "name": "Indigo Denim Pants",
+    "price": 145,
+    "salePrice": 124,
+    "status": "available",
+    "image": "images/Bottom/Indigo Denim Pants.png",
+    "hoverImage": "images/Bottom/mau_Indigo_Denim_Pants.png",
+    "gallery": [
+      "images/Bottom/Indigo Denim Pants.png",
+      "images/Bottom/Indigo Denim Pants_dt_1.png",
+      "images/Bottom/Indigo Denim Pants_dt_2.png",
+      "images/Bottom/mau_Indigo_Denim_Pants.png"
+    ],
+    "description": "Classic straight-fit denim with deep indigo tone and clean finishing.",
+    "details": ["Stone washed for soft texture", "Five-pocket construction"],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Indigo"]
+  },
+  {
+    "id": 9,
+    "name": "Raw Denim Double Knee Pants",
+    "price": 175,
+    "status": "available",
+    "image": "images/Bottom/Raw Denim Double Knee Pants.png",
+    "hoverImage": "images/Bottom/mau_Raw_Denim_Double_Knee_Pants.png",
+    "gallery": [
+      "images/Bottom/Raw Denim Double Knee Pants.png",
+      "images/Bottom/Raw Denim Double Knee Pants_dt_1.png",
+      "images/Bottom/Raw Denim Double Knee Pants_dt_2.png",
+      "images/Bottom/mau_Raw_Denim_Double_Knee_Pants.png"
+    ],
+    "description": "Workwear-inspired raw denim pants with reinforced double knee panels.",
+    "details": ["Rigid raw denim", "Utility pockets and tool loop"],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Raw Indigo"]
+  },
+  {
+    "id": 10,
+    "name": "Striped Linen Short",
+    "price": 119,
+    "status": "available",
+    "image": "images/Bottom/Striped Linen Short.png",
+    "hoverImage": "images/Bottom/mau_Striped_Linen_Short.png",
+    "gallery": [
+      "images/Bottom/Striped Linen Short.png",
+      "images/Bottom/Striped Linen Short_dt_1.png",
+      "images/Bottom/mau_Striped_Linen_Short.png"
+    ],
+    "description": "Lightweight linen shorts with vertical stripes, perfect for summer layering.",
+    "details": [
+      "Breathable linen-cotton blend",
+      "Elastic waist with hidden drawcord"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Ecru Stripe"]
+  },
+  {
+    "id": 11,
+    "name": "Wide Leg Denim Pants",
+    "price": 155,
+    "salePrice": 132,
+    "status": "available",
+    "image": "images/Bottom/Wide Leg Denim Pants.png",
+    "hoverImage": "images/Bottom/mau_Wide_Leg_Denim_Pants.png",
+    "gallery": [
+      "images/Bottom/Wide Leg Denim Pants.png",
+      "images/Bottom/Wide Leg Denim Pants_dt_1.png",
+      "images/Bottom/Wide Leg Denim Pants_dt_2.png",
+      "images/Bottom/mau_Wide_Leg_Denim_Pants.png"
+    ],
+    "description": "Relaxed wide-leg denim pants offering a clean drape and effortless proportion.",
+    "details": ["High-rise fit with full leg width", "Washed finish for softness"],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Washed Blue"]
+  },
+  {
+    "id": 12,
+    "name": "Xely Lounge Pants",
+    "price": 139,
+    "status": "available",
+    "image": "images/Bottom/Xely Lounge Pants.png",
+    "hoverImage": "images/Bottom/mau_Xely_Lounge_Pants.png",
+    "gallery": [
+      "images/Bottom/Xely Lounge Pants.png",
+      "images/Bottom/Xely Lounge Pants_dt_1.png",
+      "images/Bottom/Xely Lounge Pants_dt_2.png",
+      "images/Bottom/mau_Xely_Lounge_Pants.png"
+    ],
+    "description": "Soft lounge pants crafted from cotton-blend jersey for elevated comfort at home or on the go.",
+    "details": [
+      "Drawstring waist and cuffed hems",
+      "Two side pockets and one back pocket"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Gray"]
+  },
+  {
+    "id": 201,
+    "name": "Basic Denim Shorts",
+    "price": 90,
+    "salePrice": 76,
+    "status": "available",
+    "image": "images/Bottom/basic_short_truoc.jpg",
+    "hoverImage": "images/Bottom/basic_short_sau.jpg",
+    "gallery": [
+      "images/Bottom/basic_short_truoc.jpg",
+      "images/Bottom/basic_short_sau.jpg",
+      "images/Bottom/basic_short_dt_1.png",
+      "images/Bottom/basic_short_dt_2.png",
+      "images/Bottom/mau_basic_short.png"
+    ],
+    "description": "Updated essential shorts in a clean wash with freshly shot front/back imagery.",
+    "details": ["Washed 100% cotton denim", "Mid-rise, regular fit"],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Light Indigo"]
+  },
+  {
+    "id": 202,
+    "name": "Basic Trousers - Gray",
+    "price": 159,
+    "status": "sold-out",
+    "image": "images/Bottom/pleated_trouser_truoc.jpg",
+    "hoverImage": "images/Bottom/pleated_trouser_sau.jpg",
+    "gallery": [
+      "images/Bottom/pleated_trouser_truoc.jpg",
+      "images/Bottom/pleated_trouser_sau.jpg",
+      "images/Bottom/pleated_trouser_dt_1.png",
+      "images/Bottom/pleated_trouser_dt_2.png",
+      "images/Bottom/mau_pleated_trouser.png"
+    ],
+    "description": "Pleated-front variation of the classic gray trouser captured in the latest shoot.",
+    "details": ["Mid-weight twill blend", "Front pleats with clean crease"],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Gray", "Black"]
+  },
+  {
+    "id": 203,
+    "name": "Dirty Blue Denim Pants",
+    "price": 89,
+    "status": "available",
+    "image": "images/Bottom/dirty_blue_denim_pants_truoc.png",
+    "hoverImage": "images/Bottom/dirty_blue_denim_pants_sau.png",
+    "gallery": [
+      "images/Bottom/dirty_blue_denim_pants_truoc.png",
+      "images/Bottom/dirty_blue_denim_pants_sau.png",
+      "images/Bottom/dirty_blue_denim_pants_dt_1.png",
+      "images/Bottom/dirty_blue_denim_pants_dt_2.png",
+      "images/Bottom/mau_dirty_blue_denim_pants.jpg"
+    ],
+    "description": "Washed blue take on the straight denim silhouette with newly added imagery.",
+    "details": ["Enzyme washed denim", "Button fly and metal rivets"],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Blue"]
+  }
+]

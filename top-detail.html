@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avant Atelier &mdash; Product Detail</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Tops.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="auth.js" defer></script>
+    <style>
+        .detail-toast-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .detail-toast {
+            background: rgba(17, 17, 17, 0.88);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            letter-spacing: 0.4px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+        .detail-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header id="site-header-placeholder" class="landing-header" data-solid-start="true">
+        <nav class="navbar">
+            <!-- Hamburger -->
+            <input type="checkbox" id="menu-toggler">
+            <label for="menu-toggler" id="hamburger-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M3 18h18v-2H3v2zm0-5h18V11H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+            </label>
+
+            <!-- Logo -->
+            <h2 class="logo"><a href="index.html">AVANT ATELIER</a></h2>
+
+            <!-- Menu -->
+            <ul class="all-links" id="sideMenu">
+            <li class="close-btn">
+                <label for="menu-toggler" class="close-icon"><i class="fas fa-times"></i></label>
+            </li>
+            <li><a href="index.html#home">Home</a></li>
+            <li class="has-submenu">
+                <div class="submenu-header">
+                    <a href="Products.html">Products</a>
+                    <button class="submenu-control" type="button" aria-expanded="false" aria-label="Toggle products menu">
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <ul class="submenu">
+                    <li><a href="top.html">Top</a></li>
+                    <li><a href="bottom.html">Bottom</a></li>
+                    <li><a href="accessories.html">Accessories</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu inspiration-submenu">
+            <div class="submenu-header">
+              <a href="index.html#portfolio">Inspiration</a>
+              <button class="submenu-control" type="button" aria-expanded="false" aria-label="Toggle inspiration menu">
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <ul class="submenu">
+              <li><a href="news.html">News</a></li>
+            </ul>
+          </li>
+            <li><a href="index.html#about">About Us</a></li>
+            <li><a href="index.html#contact">Help</a></li>
+            </ul>
+
+            <!-- Right Icons -->
+        <div class="right-icons">
+            <a
+              href="Signin.html"
+              id="userIconLink"
+              data-logged-in-href="profile.html"
+              data-logged-out-href="Signin.html"
+              data-logged-in-title="View profile"
+              data-logged-out-title="Sign in"
+            ><i class="fas fa-user"></i></a>
+            <a href="#" id="searchBtn"><i class="fas fa-search"></i></a>
+            <a href="shopping_cart.html"><i class="fas fa-shopping-cart" aria-hidden="true"></i></a>
+        </div>
+            <div class="search-popup" id="searchPopup">
+            <div class="search-box">
+                <button class="close-search" id="closeSearch">&times;</button>
+                <h3>Search</h3>
+                <div class="search-input">
+                <input type="text" id="searchInput" placeholder="Search products">
+                </div>
+                <div id="searchResults" class="results-container"></div>
+            </div>
+            </div>
+
+      <!-- Gọi file JS -->
+      <script src="script.js"></script>
+      <script src="header.js"></script>
+
+
+        <!-- Overlay -->
+        <label for="menu-toggler" class="menu-overlay"></label>
+      </nav>
+    </header>
+    <div class="container detail-container">
+        <a class="back-link" id="detailBackLink" href="top.html">Back to top</a>
+
+        <div class="detail">
+            <div class="media">
+                <div class="main-image">
+                    <img src="" alt="Selected product" id="detailMainImage">
+                </div>
+                <div class="thumbnails" id="detailThumbnails"></div>
+            </div>
+
+            <div class="content">
+                <h1 class="name"></h1>
+                <div class="price"></div>
+                <div class="stock-status hidden" id="stockStatus"></div>
+
+                <!-- Phần màu nằm ngay trên size -->
+                <div class="colors"></div>
+
+                <!-- Phần chọn size & số lượng -->
+                <div class="product-options">
+                    <label for="sizeSelect">Size:</label>
+                    <select id="sizeSelect">
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L" selected>L</option>
+                        <option value="XL">XL</option>
+                    </select>
+
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" value="1" min="1">
+                </div>
+
+                <!-- Phần mô tả & đặc điểm -->
+                <p class="description"></p>
+                <ul class="features"></ul>
+
+                <!-- Nút bấm -->
+                <div class="buttons">
+                    <button type="button" class="btn primary">Add to cart</button>
+                    <a class="btn ghost" href="checkout.html">Buy now</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="title secondary">You may also like</div>
+        <div class="listProduct similarList"></div>
+
+        <div id="detailError" class="empty-state hidden">
+            We could not load this product. Please return to the catalog.
+        </div>
+    </div>
+
+    <script>
+        let products = [];
+
+            const params = new URLSearchParams(window.location.search);
+            const sourceKey = normalizeSourceKey(params.get("src"));
+            const returnKey = sanitizeReturnKey(params.get("return"));
+            const backLinkEl = document.getElementById("detailBackLink");
+            const allowedReturnMap = {
+                'top.html': { href: 'top.html', label: 'Back to top' },
+                'bottom.html': { href: 'bottom.html', label: 'Back to bottom' },
+                'accessories.html': { href: 'accessories.html', label: 'Back to accessories' },
+                'products.html': { href: 'Products.html', label: 'Back to catalog' },
+                'index.html': { href: 'index.html', label: 'Back to home' }
+            };
+            let currentReturnPath = null;
+            const setBackLink = (href, label) => {
+                currentReturnPath = href;
+                if (!backLinkEl) return;
+                backLinkEl.href = href;
+                backLinkEl.textContent = label;
+            };
+            const resolveReferrerLink = () => {
+                if (!document.referrer) return null;
+                try {
+                    const refUrl = new URL(document.referrer);
+                    if (refUrl.origin !== window.location.origin) return null;
+                    const refPath = sanitizeReturnKey(refUrl.pathname.split('/').pop());
+                    if (refPath && allowedReturnMap[refPath]) {
+                        return allowedReturnMap[refPath];
+                    }
+                } catch (error) {
+                    console.warn("Detail: unable to parse referrer", error);
+                }
+                return null;
+            };
+
+            if (returnKey && allowedReturnMap[returnKey]) {
+                const entry = allowedReturnMap[returnKey];
+                setBackLink(entry.href, entry.label);
+            } else {
+                const refLink = resolveReferrerLink();
+                if (refLink) {
+                    setBackLink(refLink.href, refLink.label);
+                }
+            }
+
+            const sourceDataMap = {
+                new: "NewArrivals.json",
+                bottom: "Bottoms.json",
+                bottoms: "Bottoms.json",
+                accessory: "Accessories.json",
+                accessories: "Accessories.json",
+                top: "Tops.json",
+                tops: "Tops.json"
+            };
+            const sourceLinkMap = {
+                top: { href: "top.html", label: "Back to top" },
+                tops: { href: "top.html", label: "Back to top" },
+                bottom: { href: "bottom.html", label: "Back to bottom" },
+                bottoms: { href: "bottom.html", label: "Back to bottom" },
+                accessory: { href: "accessories.html", label: "Back to accessories" },
+                accessories: { href: "accessories.html", label: "Back to accessories" }
+            };
+            const defaultSource = { data: "Tops.json" };
+            const dataURL = sourceDataMap[sourceKey] || defaultSource.data;
+
+            // Fetch đúng file
+            fetch(dataURL)
+            .then(response => {
+                if (!response.ok) {
+                throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!Array.isArray(data) || data.length === 0) {
+                showError("Product data is unavailable right now.");
+                return;
+                }
+                products = data;
+                populateDetail();
+            })
+            .catch(error => {
+                console.error("Unable to load product detail:", error);
+                showError("Cannot load this product right now. Please try again later.");
+            });
+
+
+        function populateDetail() {
+            const productIdParam = new URLSearchParams(window.location.search).get('id');
+            const targetId = Number(productIdParam);
+            const product = products.find(item => Number(item.id) === targetId);
+
+            if (!product) {
+                showError('We could not find that product. Redirecting to the catalog...');
+                setTimeout(() => {
+                    const fallbackTarget = (sourceLinkMap[sourceKey] && sourceLinkMap[sourceKey].href) || 'top.html';
+                    window.location.href = fallbackTarget;
+                }, 2600);
+                return;
+            }
+
+            if (!currentReturnPath) {
+                const linkInfo = resolveBackLinkInfo(product, sourceKey, sourceLinkMap);
+                setBackLink(linkInfo.href, linkInfo.label);
+            }
+            window.__detailReturnPath = currentReturnPath;
+
+            document.title = `${product.name} | Avant Atelier`;
+
+            const mainImage = document.getElementById('detailMainImage');
+            mainImage.src = product.image;
+            mainImage.alt = product.name;
+
+            const thumbnails = document.getElementById('detailThumbnails');
+            thumbnails.innerHTML = '';
+
+            buildGallerySources(product).forEach((src, index) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'thumb-btn';
+                button.innerHTML = `<img src="${src}" alt="${product.name} view ${index + 1}">`;
+                if (index === 0) {
+                    button.classList.add('active');
+                }
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.thumb-btn').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    mainImage.src = src;
+                    mainImage.alt = `${product.name} alternate view`;
+                });
+                thumbnails.appendChild(button);
+            });
+
+            document.querySelector('.content .name').textContent = product.name;
+            const salePriceValue = resolveSalePrice(product);
+            const discountPercent = computeDiscountPercent(product.price, salePriceValue);
+            const priceElement = document.querySelector('.content .price');
+            if (priceElement) {
+                if (salePriceValue != null) {
+                    priceElement.innerHTML = `
+                        <span class="price-sale">${formatPrice(salePriceValue)}</span>
+                        <span class="price-original">${formatPrice(product.price)}</span>
+                        ${discountPercent != null ? `<span class="price-percent">-${discountPercent}%</span>` : ""}
+                    `;
+                } else {
+                    priceElement.textContent = formatPrice(product.price);
+                }
+            }
+            document.querySelector('.content .description').textContent = product.description || 'No additional description is available for this item.';
+
+            const sizeLabel = document.querySelector('label[for="sizeSelect"]');
+            const sizeSelect = document.getElementById('sizeSelect');
+            if (sizeLabel && sizeSelect) {
+                if (Array.isArray(product.sizes) && product.sizes.length > 0) {
+                    sizeLabel.classList.remove('hidden');
+                    sizeSelect.classList.remove('hidden');
+                    sizeSelect.disabled = false;
+                    sizeSelect.innerHTML = product.sizes
+                        .map((size, index) => `<option value="${size}"${index === 0 ? ' selected' : ''}>${size}</option>`)
+                        .join('');
+                } else {
+                    sizeLabel.classList.add('hidden');
+                    sizeSelect.classList.add('hidden');
+                    sizeSelect.disabled = true;
+                    sizeSelect.innerHTML = '';
+                }
+            }
+
+            const stockStatusEl = document.getElementById('stockStatus');
+            const quantityInput = document.getElementById('quantity');
+            const addBtn = document.querySelector('.btn.primary');
+            const buyBtn = document.querySelector('.btn.ghost');
+            const isSoldOut = String(product.status || '').toLowerCase() === 'sold-out';
+
+            if (stockStatusEl) {
+                stockStatusEl.classList.add('hidden');
+                stockStatusEl.classList.remove('sold-out', 'sale-message');
+
+                if (isSoldOut) {
+                    stockStatusEl.textContent = 'Sold out';
+                    stockStatusEl.classList.remove('hidden');
+                    stockStatusEl.classList.add('sold-out');
+                } else if (salePriceValue != null) {
+                    stockStatusEl.textContent = discountPercent != null
+                        ? `Save ${discountPercent}% today`
+                        : `Now ${formatPrice(salePriceValue)} — limited time offer`;
+                    stockStatusEl.classList.remove('hidden');
+                    stockStatusEl.classList.add('sale-message');
+                }
+            }
+
+            const toggleControls = (disabled) => {
+                if (quantityInput) {
+                    quantityInput.disabled = disabled;
+                    if (disabled) quantityInput.value = 0;
+                }
+                if (sizeSelect) {
+                    sizeSelect.disabled = disabled || sizeSelect.options.length === 0;
+                }
+                if (addBtn) addBtn.disabled = disabled;
+                if (buyBtn) {
+                    if (disabled) {
+                        buyBtn.classList.add('disabled');
+                        buyBtn.setAttribute('aria-disabled', 'true');
+                    } else {
+                        buyBtn.classList.remove('disabled');
+                        buyBtn.removeAttribute('aria-disabled');
+                    }
+                }
+            };
+
+            toggleControls(isSoldOut);
+
+            const features = document.querySelector('.content .features');
+            features.innerHTML = '';
+            if (Array.isArray(product.details) && product.details.length > 0) {
+                features.classList.remove('hidden');
+                product.details.forEach(detail => {
+                    const li = document.createElement('li');
+                    li.textContent = detail;
+                    features.appendChild(li);
+                });
+            } else {
+                features.classList.add('hidden');
+            }
+
+            renderMetaSection('.colors', 'Available colors', product.colors);
+            enableColorSelection();
+            renderSimilarProducts(targetId);
+        }
+
+        function renderMetaSection(selector, label, values) {
+            const container = document.querySelector(selector);
+            if (!container) return;
+            if (!Array.isArray(values) || values.length === 0) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            container.classList.remove('hidden');
+
+            // Nếu là color → hiển thị dạng khối màu
+            if (selector === '.colors') {
+                container.innerHTML = values
+                    .map(color => `
+                        <div class="color-box" data-color="${color.toLowerCase()}">
+                            ${color}
+                        </div>
+                    `)
+                    .join('');
+            } else if (selector === '.sizes') {
+                container.innerHTML = values
+                    .map(size => `<span class="size-option">${size}</span>`)
+                    .join('');
+            }
+        }
+
+        function renderSimilarProducts(activeId) {
+            const titleEl = document.querySelector('.secondary');
+            const list = document.querySelector('.similarList');
+            if (!titleEl || !list) return;
+
+            const existingTimer = list.dataset.carouselTimer;
+            if (existingTimer) {
+                clearInterval(Number(existingTimer));
+                delete list.dataset.carouselTimer;
+            }
+
+            const similar = products.filter(item => Number(item.id) !== activeId).slice(0, 8);
+
+            if (similar.length === 0) {
+                titleEl.classList.add('hidden');
+                list.classList.add('hidden');
+                return;
+            }
+
+            titleEl.classList.remove('hidden');
+            list.classList.remove('hidden');
+            list.innerHTML = '';
+            list.scrollLeft = 0;
+
+            const fragment = document.createDocumentFragment();
+            const track = document.createElement('div');
+            track.className = 'similar-track';
+
+            similar.forEach(product => {
+                const link = document.createElement('a');
+                link.className = 'item';
+                const params = new URLSearchParams(window.location.search);
+                const sourceParam = params.get("src");
+                const linkSrc = (sourceParam && sourceParam.trim()) || deriveSource(product) || 'tops';
+                const returnQuery = currentReturnPath ? `&return=${encodeURIComponent(currentReturnPath)}` : '';
+
+                link.href = `top-detail.html?id=${encodeURIComponent(product.id)}&src=${encodeURIComponent(linkSrc)}${returnQuery}`;
+                link.setAttribute('aria-label', product.name);
+
+                const saleValue = resolveSalePrice(product);
+                const percent = computeDiscountPercent(product.price, saleValue);
+                const priceMarkup = saleValue != null
+                    ? `<span class="price-sale">${formatPrice(saleValue)}</span><span class="price-original">${formatPrice(product.price)}</span>${percent != null ? `<span class="price-percent">-${percent}%</span>` : ""}`
+                    : formatPrice(product.price);
+
+                link.innerHTML = `
+                    <div class="thumb">
+                        <img src="${product.image}" alt="${product.name}">
+                        ${product.hoverImage ? `<img class="hover" src="${product.hoverImage}" alt="${product.name} alternate view">` : ''}
+                    </div>
+                    <h2>${product.name}</h2>
+                    <div class="price">${priceMarkup}</div>
+                `;
+                track.appendChild(link);
+            });
+
+            fragment.appendChild(track);
+            list.appendChild(fragment);
+            initSimilarCarousel(list, track);
+            setupSimilarArrows(list, track);
+        }
+
+        function deriveSource(product) {
+            if (!product || !product.id) return null;
+            if (product.source) return normalizeSourceKey(product.source);
+
+            if (typeof product.id === 'number') {
+                if (product.id >= 200 && product.id < 300) return 'bottom';
+                if (product.id >= 300 && product.id < 400) return 'accessory';
+            }
+            if (product.category) {
+                const category = String(product.category).toLowerCase();
+                if (category.includes('bottom')) return 'bottom';
+                if (category.includes('access')) return 'accessory';
+                if (category.includes('top')) return 'top';
+            }
+            return 'top';
+        }
+
+        function normalizeSourceKey(value) {
+            return (value || '').toString().trim().toLowerCase();
+        }
+
+        function sanitizeReturnKey(value) {
+            if (!value) return null;
+            const normalized = String(value).trim().toLowerCase();
+            return /^[a-z0-9._-]+\.html$/.test(normalized) ? normalized : null;
+        }
+
+        function resolveBackLinkInfo(product, explicitKey, map) {
+            const direct = map[explicitKey];
+            if (direct) return direct;
+            const derivedKey = deriveSource(product);
+            const derived = map[derivedKey];
+            if (derived) return derived;
+            return map.top || { href: 'top.html', label: 'Back to top' };
+        }
+
+        function initSimilarCarousel(list, track) {
+            if (!list || !track || track.children.length < 2) return;
+
+            const stop = () => {
+                const timerId = list.dataset.carouselTimer;
+                if (timerId) {
+                    clearInterval(Number(timerId));
+                    delete list.dataset.carouselTimer;
+                }
+            };
+
+            const measureStep = () => {
+                const first = track.querySelector('.item');
+                if (!first) return 0;
+                const rect = first.getBoundingClientRect();
+                const styles = getComputedStyle(track);
+                const gapValue = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+                return rect.width + gapValue;
+            };
+
+            const runStep = () => {
+                const maxScroll = track.scrollWidth - list.clientWidth;
+                if (maxScroll <= 0) return;
+                const delta = measureStep();
+                if (delta <= 0) return;
+                const next = list.scrollLeft + delta;
+                if (next >= maxScroll - 2) {
+                    list.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    list.scrollBy({ left: delta, behavior: 'smooth' });
+                }
+            };
+
+            const start = () => {
+                stop();
+                if (list.scrollWidth <= list.clientWidth + 4) return;
+                const timer = window.setInterval(runStep, 3600);
+                list.dataset.carouselTimer = String(timer);
+            };
+
+            if (list.dataset.carouselBound !== 'true') {
+                list.addEventListener('mouseenter', stop);
+                list.addEventListener('mouseleave', start);
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden) {
+                        stop();
+                    } else {
+                        start();
+                    }
+                });
+                list.dataset.carouselBound = 'true';
+            }
+
+            list._carouselStop = stop;
+            list._carouselStart = start;
+            start();
+        }
+
+        function setupSimilarArrows(list, track) {
+            if (!list || !track) return;
+            const itemsCount = track.querySelectorAll('.item').length;
+
+            let wrapper = list.parentElement;
+            if (!wrapper) return;
+
+            if (!wrapper.classList.contains('similar-wrapper')) {
+                const newWrapper = document.createElement('div');
+                newWrapper.className = 'similar-wrapper';
+                wrapper.insertBefore(newWrapper, list);
+                newWrapper.appendChild(list);
+                wrapper = newWrapper;
+            }
+
+            wrapper.classList.add('similar-wrapper');
+            wrapper.querySelectorAll('.similar-arrow').forEach(btn => btn.remove());
+
+            if (itemsCount < 2 || track.scrollWidth <= list.clientWidth + 4) {
+                return;
+            }
+
+            const createButton = (direction) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `similar-arrow ${direction}`;
+                btn.setAttribute('aria-label', direction === 'prev' ? 'Previous suggestions' : 'Next suggestions');
+                btn.innerHTML = direction === 'prev' ? '&#10094;' : '&#10095;';
+                wrapper.appendChild(btn);
+                return btn;
+            };
+
+            const prevBtn = createButton('prev');
+            const nextBtn = createButton('next');
+
+            const measureStep = () => {
+                const first = track.querySelector('.item');
+                if (!first) return 0;
+                const rect = first.getBoundingClientRect();
+                const styles = getComputedStyle(track);
+                const gapValue = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+                return rect.width + gapValue;
+            };
+
+            const scrollByStep = (dir) => {
+                const delta = measureStep();
+                if (delta <= 0) return;
+                const maxScroll = track.scrollWidth - list.clientWidth;
+                const next = Math.min(Math.max(list.scrollLeft + dir * delta, 0), maxScroll);
+                list.scrollTo({ left: next, behavior: 'smooth' });
+            };
+
+            const handleClick = (dir) => {
+                if (typeof list._carouselStop === 'function') list._carouselStop();
+                scrollByStep(dir);
+                window.setTimeout(() => {
+                    if (typeof list._carouselStart === 'function') list._carouselStart();
+                }, 420);
+            };
+
+            prevBtn.addEventListener('click', () => handleClick(-1));
+            nextBtn.addEventListener('click', () => handleClick(1));
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('detailError');
+            const detailSection = document.querySelector('.detail');
+            const titleEl = document.querySelector('.secondary');
+            const similarList = document.querySelector('.similarList');
+
+            errorEl.textContent = message;
+            errorEl.classList.remove('hidden');
+
+            if (detailSection) detailSection.classList.add('hidden');
+            if (titleEl) titleEl.classList.add('hidden');
+            if (similarList) similarList.classList.add('hidden');
+        }
+
+        function formatPrice(value) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).format(value);
+        }
+
+        function resolveSalePrice(product) {
+            if (!product || product.salePrice == null) return null;
+            const numeric = Number(product.salePrice);
+            const base = Number(product.price);
+            if (!Number.isFinite(numeric) || !Number.isFinite(base)) return null;
+            if (numeric >= base || base <= 0) return null;
+            return numeric;
+        }
+
+        function computeDiscountPercent(original, sale) {
+            if (sale == null) return null;
+            const originalValue = Number(original);
+            const saleValue = Number(sale);
+            if (!Number.isFinite(originalValue) || !Number.isFinite(saleValue)) return null;
+            if (saleValue >= originalValue || originalValue <= 0) return null;
+            return Math.round(((originalValue - saleValue) / originalValue) * 100);
+        }
+
+        function buildGallerySources(product) {
+            const sources = [];
+            const addSource = (src) => {
+                if (src && !sources.includes(src)) sources.push(src);
+            };
+
+            addSource(product.image);
+            addSource(product.hoverImage);
+            if (Array.isArray(product.gallery)) product.gallery.forEach(addSource);
+
+            return sources;
+        }
+
+        function enableColorSelection() {
+            const colorBoxes = document.querySelectorAll('.color-box');
+            colorBoxes.forEach(box => {
+                box.addEventListener('click', () => {
+                    colorBoxes.forEach(b => b.classList.remove('active'));
+                    box.classList.add('active');
+                });
+            });
+        }
+    </script>
+    <script>
+        function showDetailToast(message) {
+            let container = document.getElementById("detail-toast-container");
+            if (!container) {
+                container = document.createElement("div");
+                container.id = "detail-toast-container";
+                container.className = "detail-toast-container";
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement("div");
+            toast.className = "detail-toast";
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => toast.classList.add("show"));
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+                setTimeout(() => toast.remove(), 250);
+            }, 2200);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const addToCartBtn = document.querySelector(".btn.primary");
+            const buyNowBtn = document.querySelector(".btn.ghost");
+
+            const buildSelectedItem = () => {
+                const productIdParam = new URLSearchParams(window.location.search).get("id");
+                const targetId = Number(productIdParam);
+                const product = products.find(item => Number(item.id) === targetId);
+
+                if (!product) {
+                    alert("Product not found!");
+                    return null;
+                }
+
+                const isSoldOut = String(product.status || "").toLowerCase() === "sold-out";
+                if (isSoldOut) {
+                    showDetailToast("This item is currently sold out.");
+                    return null;
+                }
+
+                const saleValue = resolveSalePrice(product);
+
+                const sizeSelect = document.getElementById("sizeSelect");
+                const selectedSize = sizeSelect && !sizeSelect.disabled && sizeSelect.options.length > 0
+                    ? sizeSelect.value
+                    : null;
+                const selectedColorBox = document.querySelector(".color-box.active");
+                const selectedColor = selectedColorBox ? selectedColorBox.dataset.color : "default";
+                const quantity = parseInt(document.getElementById("quantity").value) || 1;
+
+                return {
+                    id: product.id,
+                    name: product.name,
+                    price: saleValue != null ? saleValue : Number(product.price),
+                    image: product.image,
+                    size: selectedSize,
+                    color: selectedColor,
+                    quantity: quantity
+                };
+            };
+
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener("click", () => {
+                    const selectedItem = buildSelectedItem();
+                    if (!selectedItem) return;
+
+                    const existingCart = JSON.parse(localStorage.getItem("cartItems")) || [];
+                    const existingItem = existingCart.find(
+                        item => item.id === selectedItem.id && item.size === selectedItem.size && item.color === selectedItem.color
+                    );
+
+                    if (existingItem) {
+                        existingItem.quantity += selectedItem.quantity;
+                    } else {
+                        existingCart.push(selectedItem);
+                    }
+
+                    localStorage.setItem("cartItems", JSON.stringify(existingCart));
+                    showDetailToast("Added to cart!");
+                });
+            }
+
+            if (buyNowBtn) {
+                buyNowBtn.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const selectedItem = buildSelectedItem();
+                    if (!selectedItem) return;
+
+                    localStorage.setItem("checkoutSingleItem", JSON.stringify(selectedItem));
+                    window.location.href = "checkout.html?mode=buyNow";
+                });
+            }
+        });
+    </script>
+    <script src="include-footer.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

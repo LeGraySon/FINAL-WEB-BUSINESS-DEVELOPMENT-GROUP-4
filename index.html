@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avant Atelier</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="auth.js" defer></script>
+  </head>
+
+  <body class="landing-page">
+        <header class="landing-header">
+      <nav class="navbar">
+        <input type="checkbox" id="menu-toggler">
+        <label for="menu-toggler" id="hamburger-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18V11H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </label>
+
+        <h2 class="logo"><a href="index.html">AVANT ATELIER</a></h2>
+
+        <ul class="all-links" id="sideMenu">
+          <li class="close-btn">
+            <label for="menu-toggler" class="close-icon"><i class="fas fa-times"></i></label>
+          </li>
+          <li><a href="index.html#home">Home</a></li>
+          <li class="has-submenu">
+            <div class="submenu-header">
+              <a href="Products.html">Products</a>
+              <button class="submenu-control" type="button" aria-expanded="false" aria-label="Toggle products menu">
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <ul class="submenu">
+              <li><a href="top.html">Top</a></li>
+              <li><a href="bottom.html">Bottom</a></li>
+              <li><a href="accessories.html">Accessories</a></li>
+            </ul>
+          </li>
+          <li class="has-submenu inspiration-submenu">
+            <div class="submenu-header">
+              <a href="index.html#portfolio">Inspiration</a>
+              <button class="submenu-control" type="button" aria-expanded="false" aria-label="Toggle inspiration menu">
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <ul class="submenu">
+              <li><a href="news.html">News</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#contact">Help</a></li>
+        </ul>
+
+        <div class="right-icons">
+          <a
+            href="Signin.html"
+            id="userIconLink"
+            data-logged-in-href="profile.html"
+            data-logged-out-href="Signin.html"
+            data-logged-in-title="View profile"
+            data-logged-out-title="Sign in"
+          ><i class="fas fa-user"></i></a>
+          <a href="#" id="searchBtn"><i class="fas fa-search"></i></a>
+          <a href="shopping_cart.html"><i class="fas fa-shopping-cart" aria-hidden="true"></i></a>
+        </div>
+
+        <div class="search-popup" id="searchPopup">
+          <div class="search-box">
+            <button class="close-search" id="closeSearch">&times;</button>
+            <h3>Search</h3>
+            <div class="search-input">
+              <input type="text" id="searchInput" placeholder="Search products">
+            </div>
+            <div id="searchResults" class="results-container"></div>
+          </div>
+        </div>
+
+        <label for="menu-toggler" class="menu-overlay"></label>
+      </nav>
+      <script src="script.js"></script>
+      <script src="header.js"></script>
+    </header>
+
+    <section class="homepage" id="home">
+      <video autoplay muted loop playsinline class="bg-video">
+        <source src="images/Videointro.mp4" type="video/mp4">
+      </video>
+
+      <div class="overlay"></div>
+
+      <div class="content">
+        <div class="text">
+          <h1>Welcome to our dimension</h1>
+          <p>If we vibe - we vibe.</p>
+        </div>
+        <a href="#services">Shop now</a>
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <h2>New Arrivals</h2>
+      <p>Explore your vibe.</p>
+      <ul class="cards" id="newArrivalsList"></ul>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          fetch("NewArrivals.json")
+            .then(res => res.json())
+            .then(arrivals => {
+              const list = document.getElementById("newArrivalsList");
+              if (!list) return;
+                const mapReturn = (src) => {
+                  const key = String(src || "").toLowerCase();
+                  if (key === "top" || key === "tops") return "top.html";
+                  if (key === "bottom" || key === "bottoms") return "bottom.html";
+                  if (key === "accessory" || key === "accessories") return "accessories.html";
+                  if (key === "new") return "index.html";
+                  return "products.html"; 
+                };
+              list.innerHTML = arrivals.slice(0, 6).map(p => {
+                const ret = mapReturn("new");
+                const srcParam = encodeURIComponent("new");
+                const idParam = encodeURIComponent(p.id);
+                return `
+                <li class="card" onclick="window.location.href='top-detail.html?src=${srcParam}&id=${idParam}&return=${encodeURIComponent(ret)}'">
+                  <img src="${p.image}" alt="${p.name}">
+                  <h3>${p.name}</h3>
+                  <p>$${Number(p.price).toFixed(2)}</p>
+                </li>
+                `;
+              }).join("");
+            })
+            .catch(err => console.error("Error loading arrivals:", err));
+        });
+      </script>
+
+
+    </section>
+    <section class="portfolio" id="portfolio">
+      <h2>Our Mood & Aesthetics</h2>
+      <p>Take a look at some of our memorable moments.</p>
+      <div class="slider-container">
+        <div class="slider">
+          <div class="slide"><img src="images/Backdrop.jpg" alt="Slide 1"></div>
+          <div class="slide"><img src="images/Aesthetic MacBook wallpaper.jpg" alt="Slide 2"></div>
+          <div class="slide"><img src="images/mood.jpg" alt="Slide 3"></div>
+          <div class="slide"><img src="images/mood1.jpg" alt="Slide 4"></div>
+          <div class="slide"><img src="images/mood3.jpg" alt="Slide 5"></div>
+          <div class="slide"><img src="images/mood4.jpg" alt="Slide 6"></div>
+        </div>
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <video autoplay muted loop playsinline preload="auto" poster="images/Backdrop.jpg" class="about-video">
+        <source src="images/video about us new.mp4" type="video/mp4">
+        </video>
+      <div class="about-overlay"></div>
+      <div class="about-content" id="aboutContent">
+        <h2 class="type-heading">About Us</h2>
+        <p id="aboutTypewriter" class="about-typewriter" data-text="Avant Atelier was born from late-night sketchbooks, playlists on repeat, and a belief that clothes should feel like home. We curate small-batch pieces, partner with artisan makers, and obsess over every hem so you can dress with intention. Each collection is our love letter to mindful style, blending Vietnamese roots with global street sensibilities crafted for the bold, the curious, and everyone rewriting their own narrative."></p>
+        <p class="about-signature">Avant Atelier</p>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <h2>Contact Us</h2>
+      <p>Reach out to us for any inquiries or collaborations.</p>
+      <div class="row">
+        <div class="col information">
+          <div class="contact-details">
+            <p><i class="fas fa-map-marker-alt"></i> 123 Atelier Avenue, District 1, Ho Chi Minh City</p>
+            <p><i class="fas fa-envelope"></i> info@avantatelier.com</p>
+            <p><i class="fas fa-phone"></i> (+84) 123-456-789</p>
+          </div>
+        </div>
+        <div class="contactForm">
+          <form id="contactForm">
+            <input type="text" id="name" placeholder="Name*" required>
+            <input type="email" id="email" placeholder="Email*" required>
+            <textarea id="message" placeholder="Message*" required></textarea>
+            <button type="submit">Send Message</button>
+          </form>
+        </div>
+        <div id="thankYouPopup" class="thankyou-popup">
+          <span id="thankYouText">Thank you for contacting us!</span>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      let currentSlide = 0;
+      const slides = document.querySelectorAll(".slide");
+      const slider = document.querySelector(".slider");
+
+      function moveSlide(direction) {
+        currentSlide = (currentSlide + direction + slides.length) % slides.length;
+        updateSlider();
+      }
+
+      function updateSlider() {
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+      }
+
+      setInterval(() => moveSlide(1), 5000);
+
+      const menuToggler = document.getElementById("menu-toggler");
+      const overlay = document.querySelector(".menu-overlay");
+      const links = document.querySelectorAll(".all-links a");
+
+      overlay.addEventListener("click", () => (menuToggler.checked = false));
+      links.forEach(link => link.addEventListener("click", () => (menuToggler.checked = false)));
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const aboutContent = document.getElementById("aboutContent");
+        const typeTarget = document.getElementById("aboutTypewriter");
+        const typeText = typeTarget?.dataset.text || "";
+        const typingSpeed = 45;
+        const holdDuration = 15000;
+        let typingTimer = null;
+        let holdTimer = null;
+        let started = false;
+
+        const clearTimers = () => {
+          if (typingTimer) {
+            clearTimeout(typingTimer);
+            typingTimer = null;
+          }
+          if (holdTimer) {
+            clearTimeout(holdTimer);
+            holdTimer = null;
+          }
+        };
+
+        const runTypewriter = () => {
+          clearTimers();
+          if (!typeTarget) return;
+          typeTarget.textContent = "";
+          let index = 0;
+
+          const typeChar = () => {
+            if (index < typeText.length) {
+              typeTarget.textContent += typeText.charAt(index);
+              index += 1;
+              typingTimer = setTimeout(typeChar, typingSpeed);
+            } else {
+              holdTimer = setTimeout(runTypewriter, holdDuration);
+            }
+          };
+
+          typeChar();
+        };
+
+        const startTyping = () => {
+          if (started || !aboutContent) return;
+          started = true;
+          aboutContent.classList.add("show");
+          if (typeText) {
+            runTypewriter();
+          }
+        };
+
+        if (aboutContent && typeTarget) {
+          const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                startTyping();
+                obs.disconnect();
+              }
+            });
+          }, { threshold: 0.35 });
+
+          observer.observe(aboutContent);
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("contactForm");
+        const popup = document.getElementById("thankYouPopup");
+        const popupText = document.getElementById("thankYouText");
+
+        if (form && popup && popupText) {
+          form.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const message = document.getElementById("message").value.trim();
+
+            if (!name || !email || !message) {
+              alert("Please fill out all fields before submitting.");
+              return;
+            }
+            popupText.textContent = `Thank you, ${name}! Your message has been sent successfully.`;
+            popup.classList.add("show");
+            setTimeout(() => popup.classList.remove("show"), 3000);
+
+            form.reset();
+          });
+        }
+      });
+    </script>
+    <script src="include-footer.js"></script>
+  </body>
+</html>
+
+
+
+
+
+

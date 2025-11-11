@@ -1,0 +1,482 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reset password</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="sign_style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="auth.js" defer></script>
+    <style>
+      .auth-progress {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 20px 0 24px;
+      }
+
+      .auth-progress span {
+        flex: 1;
+        text-align: center;
+        font-size: 12px;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        padding: 10px 12px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 999px;
+        color: #4a4a4a;
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .auth-progress span.is-active {
+        border-color: #000;
+        color: #000;
+        font-weight: 600;
+        background: #fff;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+      }
+
+      .auth-progress span.is-completed {
+        border-color: #000;
+        color: #0f5132;
+        background: rgba(15, 81, 50, 0.08);
+      }
+
+      .flow-step {
+        display: none;
+        animation: fadeUp 0.35s ease;
+      }
+
+      .flow-step.is-active {
+        display: block;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .auth-alert {
+        display: none;
+        margin-bottom: 18px;
+        padding: 12px 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        line-height: 1.5;
+        border: 1px solid transparent;
+      }
+
+      .auth-alert.is-visible {
+        display: block;
+      }
+
+      .auth-alert.error {
+        background: rgba(229, 57, 53, 0.08);
+        border-color: rgba(229, 57, 53, 0.4);
+        color: #a11919;
+      }
+
+      .auth-alert.success {
+        background: rgba(24, 121, 78, 0.08);
+        border-color: rgba(24, 121, 78, 0.3);
+        color: #12693a;
+      }
+
+      .otp-demo {
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.04);
+        border: 1px dashed rgba(0, 0, 0, 0.28);
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 13px;
+        margin-bottom: 16px;
+      }
+
+      .otp-demo.is-visible {
+        display: flex;
+      }
+
+      .otp-demo strong {
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 18px;
+        letter-spacing: 6px;
+      }
+
+      .dual-inputs {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .dual-inputs .input-group {
+        flex: 1;
+        min-width: calc(50% - 6px);
+      }
+
+      .otp-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+
+      .link-button {
+        background: none;
+        border: none;
+        color: #000;
+        text-decoration: underline;
+        font-size: 13px;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      .countdown {
+        font-size: 12px;
+        color: #666;
+        text-align: right;
+        margin: -4px 0 12px;
+      }
+
+      #successBanner {
+        margin-bottom: 18px;
+      }
+    </style>
+  </head>
+  <body class="auth-page" style="--auth-background: url('images/background1.jpg'); --auth-overlay: rgba(255, 255, 255, 0.2);">
+    <main class="auth-main">
+      <div class="auth-container">
+        <h1>Reset password</h1>
+        <p class="auth-description">
+          Complete the two-step flow to prove ownership of your account and set a brand-new password. 
+        </p>
+
+        <div class="auth-success" id="successBanner" aria-live="polite"></div>
+
+        <div class="auth-progress" role="list">
+          <span role="listitem" data-progress-step="request" class="is-active">1. Verify email</span>
+          <span role="listitem" data-progress-step="verify">2. Set password</span>
+        </div>
+
+        <div class="auth-alert" id="requestAlert" role="alert"></div>
+
+        <form id="requestForm" class="auth-form flow-step is-active" autocomplete="off" novalidate>
+          <div class="input-group">
+            <input type="email" id="emailInput" placeholder="Enter the email you registered with" autocomplete="email" required />
+            <i class="fas fa-envelope"></i>
+          </div>
+          <button type="submit" class="btn-primary">Send verification code</button>
+        </form>
+
+        <div class="auth-alert" id="verifyAlert" role="alert"></div>
+
+        <form id="verifyForm" class="auth-form flow-step" autocomplete="off" novalidate>
+          <p class="auth-description" id="verifySubtitle">
+            Enter the 6-digit code we just generated for <strong id="targetEmail">&mdash;</strong>. This simulates the email your backend would normally send.
+          </p>
+
+          <div class="otp-demo" id="otpDemo" aria-live="assertive">
+            <span>Demo OTP</span>
+            <strong id="demoOtp">------</strong>
+          </div>
+
+          <div class="input-group">
+            <input
+              type="text"
+              id="otpInput"
+              placeholder="Enter 6-digit code"
+              inputmode="numeric"
+              pattern="\d{6}"
+              maxlength="6"
+              autocomplete="one-time-code"
+              required
+            />
+            <i class="fas fa-key"></i>
+          </div>
+
+          <div class="countdown" id="countdownText"></div>
+
+          <div class="otp-actions">
+            <button type="button" class="link-button" id="resendButton" disabled>Resend code</button>
+            <button type="button" class="link-button" id="changeEmailButton">Use a different email</button>
+          </div>
+
+          <div class="dual-inputs">
+            <div class="input-group">
+              <input type="password" id="newPassword" placeholder="New password (min 6 characters)" autocomplete="new-password" required />
+              <i class="fas fa-lock"></i>
+            </div>
+            <div class="input-group">
+              <input type="password" id="confirmPassword" placeholder="Confirm new password" autocomplete="new-password" required />
+              <i class="fas fa-lock"></i>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary">Save new password</button>
+        </form>
+
+        <button type="button" class="btn-secondary" id="cancelButton">Back to sign in</button>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="header.js"></script>
+    <script>
+      (function () {
+        const OTP_TTL_MS = 5 * 60 * 1000;
+        const RESEND_DELAY = 30;
+
+        const state = {
+          email: "",
+          otp: "",
+          expiresAt: 0,
+          countdownTimer: null,
+          step: "request"
+        };
+
+        const refs = {
+          requestForm: document.getElementById("requestForm"),
+          verifyForm: document.getElementById("verifyForm"),
+          emailInput: document.getElementById("emailInput"),
+          otpInput: document.getElementById("otpInput"),
+          newPassword: document.getElementById("newPassword"),
+          confirmPassword: document.getElementById("confirmPassword"),
+          requestAlert: document.getElementById("requestAlert"),
+          verifyAlert: document.getElementById("verifyAlert"),
+          successBanner: document.getElementById("successBanner"),
+          resendButton: document.getElementById("resendButton"),
+          changeEmailButton: document.getElementById("changeEmailButton"),
+          cancelButton: document.getElementById("cancelButton"),
+          targetEmail: document.getElementById("targetEmail"),
+          countdownText: document.getElementById("countdownText"),
+          verifySubtitle: document.getElementById("verifySubtitle"),
+          progressBullets: document.querySelectorAll("[data-progress-step]"),
+          stepViews: document.querySelectorAll(".flow-step"),
+          otpDemo: document.getElementById("otpDemo"),
+          demoOtp: document.getElementById("demoOtp")
+        };
+
+        const ensureAuthReady = () => {
+          if (!window.Auth) {
+            console.error("Auth helper not available");
+            showAlert(refs.requestAlert, "Auth helper is missing. Please reload the page.", "error");
+            return false;
+          }
+          return true;
+        };
+
+        const generateOtp = () => String(Math.floor(100000 + Math.random() * 900000));
+
+        const formatOtp = (value) => value.split("").join(" ");
+
+        const setStep = (step) => {
+          state.step = step;
+          refs.stepViews.forEach((view) => {
+            view.classList.toggle("is-active", view.id === (step === "request" ? "requestForm" : "verifyForm"));
+          });
+          refs.progressBullets.forEach((bullet) => {
+            const key = bullet.dataset.progressStep;
+            bullet.classList.toggle("is-active", key === step);
+            bullet.classList.toggle("is-completed", step === "verify" && key === "request");
+          });
+          if (step === "request") {
+            stopCountdown();
+            refs.otpDemo.classList.remove("is-visible");
+            refs.verifyForm.reset();
+            refs.verifyAlert.classList.remove("is-visible", "error", "success");
+            refs.countdownText.textContent = "";
+            refs.targetEmail.textContent = "-";
+            refs.resendButton.disabled = true;
+          }
+        };
+
+        const stopCountdown = () => {
+          if (state.countdownTimer) {
+            clearInterval(state.countdownTimer);
+            state.countdownTimer = null;
+          }
+          refs.resendButton.disabled = false;
+          refs.resendButton.textContent = "Resend code";
+          refs.countdownText.textContent = "";
+        };
+
+        const startCountdown = () => {
+          let remaining = RESEND_DELAY;
+          stopCountdown();
+          refs.resendButton.disabled = true;
+          refs.resendButton.textContent = `Resend code (${remaining}s)`;
+          refs.countdownText.textContent = "Code expires in about 5 minutes.";
+
+          state.countdownTimer = setInterval(() => {
+            remaining -= 1;
+            if (remaining <= 0) {
+              stopCountdown();
+            } else {
+              refs.resendButton.textContent = `Resend code (${remaining}s)`;
+            }
+          }, 1000);
+        };
+
+        const showAlert = (element, message, type = "error") => {
+          element.textContent = message;
+          element.classList.add("is-visible");
+          element.classList.toggle("error", type === "error");
+          element.classList.toggle("success", type === "success");
+          if (type === "success") {
+            element.setAttribute("aria-live", "polite");
+          }
+        };
+
+        const clearAlert = (element) => {
+          element.textContent = "";
+          element.classList.remove("is-visible", "error", "success");
+        };
+
+        const showSuccessBanner = (message) => {
+          refs.successBanner.textContent = message;
+          refs.successBanner.classList.add("is-visible");
+        };
+
+        const sendOtp = (isResend = false) => {
+          state.otp = generateOtp();
+          state.expiresAt = Date.now() + OTP_TTL_MS;
+          refs.demoOtp.textContent = formatOtp(state.otp);
+          refs.otpDemo.classList.add("is-visible");
+          refs.otpInput.value = "";
+          startCountdown();
+
+          const alertMsg = isResend
+            ? "We generated a new code for you. Use the digits shown above."
+            : "Use the demo code above to prove ownership of your account.";
+          showAlert(refs.verifyAlert, alertMsg, "success");
+        };
+
+        refs.requestForm.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          if (!ensureAuthReady()) return;
+
+          clearAlert(refs.requestAlert);
+
+          const email = refs.emailInput.value.trim().toLowerCase();
+          if (!email) {
+            showAlert(refs.requestAlert, "Email is required.");
+            return;
+          }
+
+          const isEmailValid = refs.emailInput.checkValidity();
+          if (!isEmailValid) {
+            showAlert(refs.requestAlert, "Invalid email format.");
+            return;
+          }
+
+          const user = await Auth.findUserByEmail(email);
+          if (!user) {
+            showAlert(refs.requestAlert, "We couldn't find an account with that email.");
+            return;
+          }
+
+          state.email = user.email;
+          refs.targetEmail.textContent = user.email;
+          refs.verifySubtitle.innerHTML = `Enter the 6-digit code we just generated for <strong>${user.email}</strong>.`;
+
+          sendOtp(false);
+          setStep("verify");
+          clearAlert(refs.requestAlert);
+        });
+
+        refs.verifyForm.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          if (!ensureAuthReady()) return;
+
+          clearAlert(refs.verifyAlert);
+
+          if (!state.email || !state.otp) {
+            showAlert(refs.verifyAlert, "Start by verifying your email first.");
+            setStep("request");
+            return;
+          }
+
+          const enteredCode = refs.otpInput.value.trim();
+          const newPassword = refs.newPassword.value.trim();
+          const confirmPassword = refs.confirmPassword.value.trim();
+
+          if (enteredCode.length !== 6) {
+            showAlert(refs.verifyAlert, "Please enter the 6 digits we sent you.");
+            return;
+          }
+
+          if (Date.now() > state.expiresAt) {
+            showAlert(refs.verifyAlert, "This code expired. Generate a new one.");
+            return;
+          }
+
+          if (enteredCode !== state.otp) {
+            showAlert(refs.verifyAlert, "Incorrect code. Double-check the digits above.");
+            return;
+          }
+
+          if (newPassword.length < 6) {
+            showAlert(refs.verifyAlert, "New password must be at least 6 characters.");
+            return;
+          }
+
+          if (newPassword !== confirmPassword) {
+            showAlert(refs.verifyAlert, "Confirmation does not match your new password.");
+            return;
+          }
+
+          const users = Auth.store.get(Auth.STORAGE_KEYS.USERS, []);
+          const index = users.findIndex((u) => String(u.email).toLowerCase() === state.email.toLowerCase());
+          if (index === -1) {
+            showAlert(refs.verifyAlert, "We couldn't find your account anymore. Please start over.");
+            setStep("request");
+            return;
+          }
+
+          users[index].password = newPassword;
+          Auth.store.set(Auth.STORAGE_KEYS.USERS, users);
+
+          showAlert(refs.verifyAlert, "Password updated successfully. You can sign in now.", "success");
+          showSuccessBanner(`Password for ${state.email} has been updated.`);
+          refs.verifyForm.reset();
+          refs.requestForm.reset();
+          state.email = "";
+          state.otp = "";
+          setStep("request");
+        });
+
+        refs.resendButton.addEventListener("click", () => {
+          if (state.step !== "verify" || !state.email) return;
+          sendOtp(true);
+        });
+
+        refs.changeEmailButton.addEventListener("click", () => {
+          state.email = "";
+          setStep("request");
+          refs.requestForm.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        refs.cancelButton.addEventListener("click", () => {
+          window.location.href = "Signin.html";
+        });
+
+        refs.emailInput.addEventListener("input", () => {
+          clearAlert(refs.requestAlert);
+        });
+
+        refs.otpInput.addEventListener("input", () => {
+          clearAlert(refs.verifyAlert);
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avant Atelier — Products</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="products.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="auth.js" defer></script>
+</head>
+<body class="products-page">
+        <header class="landing-header">
+      <nav class="navbar">
+        <input type="checkbox" id="menu-toggler">
+        <label for="menu-toggler" id="hamburger-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18V11H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </label>
+
+        <h2 class="logo"><a href="index.html">AVANT ATELIER</a></h2>
+
+        <ul class="all-links" id="sideMenu">
+          <li class="close-btn">
+            <label for="menu-toggler" class="close-icon"><i class="fas fa-times"></i></label>
+          </li>
+          <li><a href="index.html#home">Home</a></li>
+          <li class="has-submenu">
+            <div class="submenu-header">
+              <a href="Products.html">Products</a>
+              <button class="submenu-control" type="button" aria-expanded="false" aria-label="Toggle products menu">
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <ul class="submenu">
+              <li><a href="top.html">Top</a></li>
+              <li><a href="bottom.html">Bottom</a></li>
+              <li><a href="accessories.html">Accessories</a></li>
+            </ul>
+          </li>
+          <li class="has-submenu inspiration-submenu">
+            <div class="submenu-header">
+              <a href="index.html#portfolio">Inspiration</a>
+              <button class="submenu-control" type="button" aria-expanded="false" aria-label="Toggle inspiration menu">
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <ul class="submenu">
+              <li><a href="news.html">News</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#contact">Help</a></li>
+        </ul>
+
+        <div class="right-icons">
+          <a
+            href="Signin.html"
+            id="userIconLink"
+            data-logged-in-href="profile.html"
+            data-logged-out-href="Signin.html"
+            data-logged-in-title="View profile"
+            data-logged-out-title="Sign in"
+          ><i class="fas fa-user"></i></a>
+          <a href="#" id="searchBtn"><i class="fas fa-search"></i></a>
+          <a href="shopping_cart.html"><i class="fas fa-shopping-cart" aria-hidden="true"></i></a>
+        </div>
+
+        <div class="search-popup" id="searchPopup">
+          <div class="search-box">
+            <button class="close-search" id="closeSearch">&times;</button>
+            <h3>Search</h3>
+            <div class="search-input">
+              <input type="text" id="searchInput" placeholder="Search products">
+            </div>
+            <div id="searchResults" class="results-container"></div>
+          </div>
+        </div>
+
+        <label for="menu-toggler" class="menu-overlay"></label>
+      </nav>
+      <script src="script.js"></script>
+      <script src="header.js"></script>
+    </header>
+
+    <main>
+      <section class="products-hero">
+        <h1>All Products</h1>
+        <p>Browse every drop from Avant Atelier in one place — discover the latest arrivals, elevated tops, tailored bottoms, and statement accessories curated for your wardrobe.</p>
+      </section>
+
+      <section class="products-section" id="products-all">
+        <div class="section-head">
+          <h2>Curated Catalogue</h2>
+          <p>Everything — new drops, signature tops, precise bottoms, and standout accessories — shuffled for serendipity. Use the filter drawer to quickly narrow down what you need.</p>
+        </div>
+        <div id="productsAllList" class="listProduct"></div>
+        <div id="productsAllEmpty" class="empty-state hidden">Products are being updated. Please check back soon.</div>
+      </section>
+    </main>
+
+    <script src="product-listing.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+          const resolveDetailHref = (product, fallbackSrc) => {
+          const map = {
+            tops: "tops",
+            top: "tops",
+            bottom: "bottom",
+            bottoms: "bottom",
+            accessory: "accessory",
+            accessories: "accessory",
+            new: "new"
+          };
+          const sourceKey = String(product?.source || "").toLowerCase();
+          const src = map[sourceKey] || map[fallbackSrc] || "tops";
+            const srcToReturn = {
+              tops: 'top.html',
+              top: 'top.html',
+              bottom: 'bottom.html',
+              bottoms: 'bottom.html',
+              accessory: 'accessories.html',
+              accessories: 'accessories.html',
+              new: 'Products.html'
+            };
+            const back = srcToReturn[src] || 'Products.html';
+            return `top-detail.html?src=${encodeURIComponent(src)}&id=${encodeURIComponent(product.id)}&return=${encodeURIComponent(back)}`;
+        };
+
+        ProductListing.init({
+          listId: "productsAllList",
+          emptyId: "productsAllEmpty",
+          source: [
+            { file: "NewArrivals.json", tag: "new" },
+            { file: "Tops.json", tag: "tops" },
+            { file: "Bottoms.json", tag: "bottom" },
+            { file: "Accessories.json", tag: "accessory" }
+          ],
+          pageKey: "products-all",
+          filterTitle: "Filter products",
+          enableFilters: true,
+          shuffle: true,
+          detailUrl: (product) => resolveDetailHref(product, product.__sourceTag || "tops")
+        });
+      });
+    </script>
+    <script src="include-footer.js"></script>
+</body>
+</html>

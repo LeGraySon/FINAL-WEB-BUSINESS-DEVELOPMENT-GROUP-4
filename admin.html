@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avant Atelier Customer Console</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+      :root {
+        --surface: rgba(255, 255, 255, 0.92);
+        --border: rgba(0, 0, 0, 0.08);
+        --text-muted: #6c6c6c;
+        --accent: #111;
+      }
+
+      body.admin-page {
+        background-image: url("images/background texture.jpg");
+        color: #111;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .admin-shell {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+        padding: 120px 28px 60px;
+        width: 100%;
+        flex: 1;
+      }
+
+      .admin-panel {
+        background: var(--surface);
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        padding: 28px 32px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
+      }
+
+      .admin-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+
+      .admin-heading h1 {
+        margin: 0;
+        font-size: 32px;
+        letter-spacing: 0.04em;
+      }
+
+      .admin-heading .tagline {
+        color: var(--text-muted);
+        font-size: 14px;
+      }
+
+      .admin-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .admin-actions button {
+        border-radius: 999px;
+        border: 1px solid #111;
+        padding: 10px 18px;
+        background: transparent;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .admin-actions button.primary {
+        background: #111;
+        color: #fff;
+      }
+
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 18px;
+      }
+
+      .kpi-card {
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px;
+        background: #fff;
+        display: grid;
+        gap: 6px;
+      }
+
+      .kpi-label {
+        font-size: 12px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .kpi-value {
+        font-size: 32px;
+        font-weight: 600;
+      }
+
+      .kpi-trend {
+        font-size: 13px;
+        color: #0f7b2d;
+      }
+
+      .kpi-trend.down {
+        color: #b42318;
+      }
+
+      .admin-layout {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 24px;
+      }
+
+      .admin-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .sidebar-card {
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px;
+        background: #fff;
+      }
+
+      .sidebar-card h3 {
+        margin: 0 0 12px;
+        font-size: 16px;
+        letter-spacing: 0.08em;
+      }
+
+      .segment-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .segment-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .segment-item.active {
+        background: #111;
+        color: #fff;
+        border-color: #111;
+      }
+
+      .admin-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+
+      .admin-toolbar input,
+      .admin-toolbar select {
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        padding: 10px 18px;
+        font-size: 14px;
+        background: rgba(255, 255, 255, 0.94);
+      }
+
+      .admin-toolbar .pill {
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        padding: 8px 14px;
+        font-size: 13px;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.04);
+      }
+
+      .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+
+      .admin-table th,
+      .admin-table td {
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+        font-size: 14px;
+      }
+
+      .admin-table th {
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 0.2em;
+        color: var(--text-muted);
+      }
+
+      .status-pill {
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .status-pill.active {
+        background: rgba(34, 197, 94, 0.12);
+        color: #166534;
+      }
+
+      .status-pill.risk {
+        background: rgba(244, 114, 182, 0.15);
+        color: #9d174d;
+      }
+
+      .status-pill.dormant {
+        background: rgba(148, 163, 184, 0.2);
+        color: #475569;
+      }
+
+      .customer-tag {
+        display: inline-block;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 12px;
+        background: rgba(0, 0, 0, 0.06);
+        margin-right: 6px;
+      }
+
+      .notes-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+
+      .notes-list li {
+        border-left: 3px solid #111;
+        padding-left: 10px;
+      }
+
+      .invoice-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        backdrop-filter: blur(4px);
+        z-index: 2000;
+      }
+
+      .invoice-overlay[hidden] {
+        display: none !important;
+      }
+
+      .invoice-card {
+        width: min(460px, 95vw);
+        background: #fff;
+        border-radius: 18px;
+        padding: 28px;
+        position: relative;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+      }
+
+      .invoice-close {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(0, 0, 0, 0.08);
+        cursor: pointer;
+      }
+
+      .invoice-thumbnail {
+        width: 100%;
+        height: 190px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #0b0b0b, #363636);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        letter-spacing: 0.3em;
+        margin-bottom: 20px;
+      }
+
+      .invoice-thumbnail span {
+        font-size: 12px;
+        letter-spacing: 0.2em;
+        opacity: 0.7;
+      }
+
+      .invoice-thumbnail strong {
+        font-size: 28px;
+      }
+
+      .invoice-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 18px;
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px;
+      }
+
+      .invoice-row {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 14px;
+      }
+
+      .invoice-row dt {
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin: 0 0 4px;
+      }
+
+      .invoice-row dd {
+        margin: 0;
+        font-weight: 600;
+        color: #111;
+      }
+
+      .invoice-row.wide {
+        grid-column: span 2;
+      }
+
+      .invoice-actions {
+        display: flex;
+        gap: 12px;
+      }
+
+      .invoice-actions button {
+        flex: 1;
+        padding: 12px 16px;
+        border-radius: 10px;
+        border: 1px solid #111;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .invoice-actions button.primary {
+        background: #111;
+        color: #fff;
+      }
+
+      @media (max-width: 960px) {
+        .admin-layout {
+          grid-template-columns: 1fr;
+        }
+        .admin-shell {
+          padding: 120px 14px 60px;
+        }
+      }
+      #productManager {
+        margin-top: 40px;
+      }
+      #productManager .admin-toolbar input {
+        max-width: 200px;
+      }
+      #productManager table {
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body class="admin-page">
+    <main class="admin-shell">
+      <section class="admin-panel admin-heading">
+        <div>
+          <h1>Client Information</h1>
+          <p class="tagline">Monitor loyalty, segment health, and signals that matter.</p>
+        </div>
+        <div class="admin-actions">
+          <button id="snapshotBtn"><i class="fas fa-arrow-trend-up"></i> Weekly snapshot</button>
+          <button class="primary" id="exportBtn"><i class="fas fa-download"></i> Export report</button>
+        </div>
+      </section>
+
+      <section class="admin-panel">
+        <div class="kpi-grid" id="kpiGrid"></div>
+      </section>
+
+      <section class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="sidebar-card">
+            <h3>Segments</h3>
+            <div class="segment-list" id="segmentList"></div>
+          </div>
+          <div class="sidebar-card">
+            <h3>Latest signals</h3>
+            <ul class="notes-list" id="notesFeed">
+              <li>Awaiting data...</li>
+            </ul>
+          </div>
+        </aside>
+
+        <div class="admin-panel">
+          <div class="admin-toolbar">
+            <input type="search" id="searchInput" placeholder="Search by name, email, or city..." />
+            <select id="tierSelect">
+              <option value="all">All tiers</option>
+              <option value="atelier">Atelier Black</option>
+              <option value="luxe">Luxe Gold</option>
+              <option value="studio">Studio Silver</option>
+            </select>
+            <div class="pill" id="toggleHighValue">High value</div>
+            <div class="pill" id="toggleDormant">Dormant</div>
+          </div>
+
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Tier</th>
+                <th>Lifetime spend</th>
+                <th>Last order</th>
+                <th>Status</th>
+                <th>Tags</th>
+              </tr>
+            </thead>
+            <tbody id="customerTable"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <div class="invoice-overlay" id="invoiceModal" hidden>
+      <div class="invoice-card" role="dialog" aria-modal="true">
+        <button class="invoice-close" id="invoiceCloseBtn" aria-label="Close invoice">
+          <i class="fas fa-times"></i>
+        </button>
+        <div class="invoice-thumbnail">
+          <span>Avant Atelier</span>
+          <strong id="invoiceThumbCode">INV</strong>
+        </div>
+        <dl class="invoice-list">
+          <div class="invoice-row">
+            <dt>Client</dt>
+            <dd id="invoiceOrderId">—</dd>
+          </div>
+          <div class="invoice-row">
+            <dt>Last order</dt>
+            <dd id="invoiceDateText">—</dd>
+          </div>
+          <div class="invoice-row">
+            <dt>Payment</dt>
+            <dd id="invoicePayment">—</dd>
+          </div>
+          <div class="invoice-row">
+            <dt>Status</dt>
+            <dd id="invoiceStatusText">—</dd>
+          </div>
+          <div class="invoice-row">
+            <dt>Items</dt>
+            <dd id="invoiceItemsCount">—</dd>
+          </div>
+          <div class="invoice-row">
+            <dt>Total</dt>
+            <dd id="invoiceTotalValue">—</dd>
+          </div>
+          <div class="invoice-row wide">
+            <dt>Ship to</dt>
+            <dd id="invoiceShipTo">—</dd>
+          </div>
+        </dl>
+        <div class="invoice-actions">
+          <button class="primary" id="invoicePrintBtn">Print</button>
+          <button id="invoiceSaveBtn">Save</button>
+        </div>
+        <p class="invoice-summary-line" id="invoiceSummaryLine" style="margin-top:14px;color:#444;font-size:13px;">Select a row to preview this client.</p>
+      </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="admin.js"></script>
+    <script src="include-header.js"></script>
+    <script src="header.js"></script>
+    <section id="productManager" class="admin-panel" style="margin-top:40px;">
+      <h2 style="margin-top:0;"> Product Management</h2>
+      <p style="color:#6c6c6c;font-size:14px;margin-bottom:18px;">
+        Manage all store products here. Add, edit or remove items directly.
+      </p>
+
+      <!-- Input form -->
+      <div style="
+          display:flex;
+          flex-wrap:wrap;
+          gap:12px;
+          margin-bottom:16px;
+          align-items:center;
+      ">
+        <input type="text" id="productName" placeholder="Product name"
+          style="flex:1;min-width:160px;padding:10px 14px;border-radius:10px;border:1px solid var(--border);" />
+        <input type="text" id="productCategory" placeholder="Category"
+          style="width:160px;padding:10px 14px;border-radius:10px;border:1px solid var(--border);" />
+        <input type="number" id="productPrice" placeholder="Price (USD)" step="0.01"
+          style="width:140px;padding:10px 14px;border-radius:10px;border:1px solid var(--border);" />
+        <input type="text" id="productImage" placeholder="Image path"
+          style="flex:1;min-width:220px;padding:10px 14px;border-radius:10px;border:1px solid var(--border);" />
+        <button id="addProductBtn"
+          style="background:#111;color:#fff;padding:10px 18px;border:none;border-radius:999px;font-weight:600;cursor:pointer;">
+           Add Product
+        </button>
+      </div>
+
+      <!-- Table -->
+      <div style="overflow-x:auto;">
+        <table class="admin-table" id="productTable" style="min-width:680px;">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price (USD)</th>
+              <th>Image</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productBody">
+            <tr><td colspan="6">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <script src="include-footer.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const role = localStorage.getItem('role');
+      if (role !== 'admin') {
+        alert('Access denied. Please sign in as admin.');
+        window.location.href = 'sign-in.html';
+        return;
+      }
+      console.log('Admin logged in');
+      const logoutBtn = document.createElement('button');
+      logoutBtn.textContent = 'Logout';
+      logoutBtn.style.cssText = `
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        background: #111;
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        z-index: 9999;
+      `;
+      document.body.appendChild(logoutBtn);
+
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('role');
+        localStorage.removeItem('app_session');
+        localStorage.removeItem('cartItems');
+        alert('Logged out successfully.');
+        window.location.href = 'Signin.html';
+      });
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const role = localStorage.getItem('role');
+      if (role !== 'admin') {
+        alert('Access denied. Please sign in as admin.');
+        window.location.href = 'Signin.html';
+        return;
+      }
+      console.log('Admin logged in');
+      const logoutBtn = document.createElement('button');
+      logoutBtn.textContent = 'Logout';
+      logoutBtn.style.cssText = `
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        background: #111;
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        z-index: 9999;
+      `;
+      document.body.appendChild(logoutBtn);
+
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('app_session');
+        localStorage.removeItem('role');
+        alert('Logged out successfully.');
+        window.location.href = 'Signin.html';
+      });
+    });
+  </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+        const STORAGE_KEY = 'admin_products';
+        const JSON_FILES = [
+          'Tops.json',
+          'Bottoms.json',
+          'Accessories.json',
+          'NewArrivals.json'
+        ];
+
+        const productBody = document.getElementById('productBody');
+        const nameInput = document.getElementById('productName');
+        const priceInput = document.getElementById('productPrice');
+        const imageInput = document.getElementById('productImage');
+        const addBtn = document.getElementById('addProductBtn');
+
+        let products = [];
+        async function loadProducts() {
+          const localData = localStorage.getItem(STORAGE_KEY);
+          if (localData) {
+            products = JSON.parse(localData);
+            renderProducts();
+            return;
+          }
+
+          try {
+            const results = await Promise.all(
+              JSON_FILES.map(file => fetch(file).then(res => res.json()))
+            );
+            products = results.flat();
+            saveProducts();
+            renderProducts();
+          } catch (err) {
+            console.error('Error loading JSON files:', err);
+            productBody.innerHTML = '<tr><td colspan="6"> Failed to load products.</td></tr>';
+          }
+        }
+
+        function saveProducts() {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+        }
+
+        function formatUSD(value) {
+          const num = Number(value) || 0;
+          return `$${num.toFixed(2)}`;
+        }
+
+        function renderProducts() {
+          if (!products.length) {
+            productBody.innerHTML = '<tr><td colspan="6">No products available.</td></tr>';
+            return;
+          }
+
+          productBody.innerHTML = products.map((p, i) => `
+            <tr>
+              <td>${i + 1}</td>
+              <td>${p.name}</td>
+              <td>${p.category || '-'}</td>
+              <td>${formatUSD(p.price)}</td>
+              <td><img src="${p.image}" style="width:70px;height:70px;object-fit:cover;border-radius:8px;border:1px solid #ccc"></td>
+              <td>
+                <button onclick="editProduct(${i})" style="background:#2563eb;color:white;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;">✏️ Edit</button>
+                <button onclick="deleteProduct(${i})" style="background:#b91c1c;color:white;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;">🗑️ Delete</button>
+              </td>
+            </tr>
+          `).join('');
+        }
+
+        window.deleteProduct = (index) => {
+          if (confirm('Delete this product?')) {
+            products.splice(index, 1);
+            saveProducts();
+            renderProducts();
+          }
+        };
+
+        window.editProduct = (index) => {
+          const p = products[index];
+          const newName = prompt('Edit name:', p.name);
+          const newPrice = parseFloat(prompt('Edit price (USD):', p.price));
+          const newImage = prompt('Edit image path:', p.image);
+          if (newName && !isNaN(newPrice)) {
+            products[index] = { ...p, name: newName, price: newPrice, image: newImage };
+            saveProducts();
+            renderProducts();
+          }
+        };
+
+        addBtn.addEventListener('click', () => {
+          const name = nameInput.value.trim();
+          const price = parseFloat(priceInput.value.trim());
+          const image = imageInput.value.trim() || 'images/default.jpg';
+          if (!name || isNaN(price)) {
+            alert('Please enter valid product name and price.');
+            return;
+          }
+          products.push({ id: Date.now(), name, price, image });
+          saveProducts();
+          renderProducts();
+          nameInput.value = '';
+          priceInput.value = '';
+          imageInput.value = '';
+        });
+
+        await loadProducts();
+      }); 
+  </script>
+  </body>
+</html>

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout | Avant Atelier</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="auth.js" defer></script>
+
+  <style>
+    :root { --black:#000; --gray:#777; --light:#f6f6f6; --border:#ddd; }
+    * { box-sizing: border-box; }
+    body { margin:0; background-image: url(images/background\ texture.jpg); color:#111; }
+
+    /* ==== MAIN WRAP ==== */
+    .checkout-wrap { max-width:1050px; margin:120px auto 60px; background:#fff; border-radius:10px; box-shadow:0 10px 24px rgba(0,0,0,.08); padding:28px; }
+    h1 { margin:0 0 18px; text-transform:uppercase; letter-spacing:1px; font-size:24px; font-weight:600; }
+    .grid { display:grid; grid-template-columns: 1fr 360px; gap:28px; }
+    @media (max-width:900px){ .grid { grid-template-columns:1fr; margin-top:6px; } }
+
+    /* Card blocks */
+    .card { border:1px solid var(--border); border-radius:10px; padding:18px; background:#fff; }
+    .card h2 { font-size:16px; margin:0 0 12px; text-transform:uppercase; letter-spacing:.5px; font-weight:600; }
+
+    /* Form */
+    .row { display:flex; gap:12px; }
+    .row > div { flex:1; }
+    label { display:block; font-size:13px; color:#333; margin:8px 0 6px; }
+    input, select, textarea {
+      width:100%; border:1px solid #cfcfcf; border-radius:8px; padding:10px 12px; font-size:14px; outline:none; background:#fff;
+    }
+    input:focus, select:focus, textarea:focus { border-color:#000; }
+    textarea { resize:vertical; min-height:84px; }
+
+    /* Summary */
+    .summary-list { border-top:1px dashed #e2e2e2; margin-top:6px; padding-top:6px; }
+    .sum-item { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; padding:8px 0; border-bottom:1px dashed #eee; }
+    .sum-item:last-child { border-bottom:none; }
+    .sum-info { display:flex; gap:10px; align-items:center; }
+    .thumb { width:44px; height:54px; border:1px solid #eee; border-radius:6px; object-fit:cover; background:#fafafa; }
+    .sum-name { font-size:14px; color:#222; font-weight:500; }
+    .sum-meta { font-size:12px; color:#666; margin-top:2px; }
+    .sum-price { font-weight:600; }
+    .totals { margin-top:10px; }
+    .tot-row { display:flex; justify-content:space-between; padding:6px 0; font-size:14px; }
+    .tot-row.total { border-top:1px solid #ddd; margin-top:6px; padding-top:10px; font-weight:700; }
+    .empty { background:#fff7f7; border:1px solid #ffd0d0; color:#a10000; padding:10px 12px; border-radius:8px; font-size:14px; }
+
+    .btn-primary {
+      width:100%; margin-top:14px; padding:13px 16px; border:none; border-radius:8px;
+      background:#000; color:#fff; font-weight:700; letter-spacing:.3px; cursor:pointer; transition:.2s;
+    }
+    .btn-primary:hover { background:#333; }
+
+    .order-complete-overlay,
+    .paypal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 2000;
+      backdrop-filter: blur(6px);
+    }
+
+    .order-complete-overlay[hidden],
+    .paypal-overlay[hidden] {
+      display: none !important;
+    }
+
+    .order-complete-card,
+    .paypal-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 32px 40px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+      display: grid;
+      gap: 16px;
+    }
+
+    .order-complete-icon {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background: rgba(46, 204, 113, 0.12);
+      color: #1e8449;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+    }
+
+    .order-complete-card h3,
+    .paypal-card h3 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 0.4px;
+    }
+
+    .order-complete-card p,
+    .paypal-card p {
+      margin: 0;
+      color: #444;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .order-complete-countdown {
+      font-weight: 600;
+      color: #111;
+    }
+
+    .paypal-brand {
+      font-size: 44px;
+      color: #003087;
+      margin-bottom: 6px;
+    }
+
+    .paypal-card strong {
+      font-weight: 600;
+    }
+
+    .paypal-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 6px 0 12px;
+      position: relative;
+      min-height: 56px;
+    }
+
+    .paypal-spinner {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 4px solid rgba(0, 48, 135, 0.12);
+      border-top-color: #0070ba;
+      animation: paypal-spin 1s linear infinite;
+    }
+
+    .paypal-spinner[hidden] {
+      display: none;
+    }
+
+    .paypal-check {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(46, 204, 113, 0.16);
+      color: #1e8449;
+      font-size: 24px;
+    }
+
+    .paypal-check[hidden] {
+      display: none;
+    }
+
+    @keyframes paypal-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+      <header class="landing-header">
+      <nav class="navbar">
+        <input type="checkbox" id="menu-toggler">
+        <label for="menu-toggler" id="hamburger-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18V11H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </label>
+
+        <h2 class="logo"><a href="index.html">AVANT ATELIER</a></h2>
+
+        <ul class="all-links" id="sideMenu">
+          <li class="close-btn">
+            <label for="menu-toggler" class="close-icon"><i class="fas fa-times"></i></label>
+          </li>
+          <li><a href="index.html#home">Home</a></li>
+          <li class="has-submenu">
+            <div class="submenu-header">
+              <a href="Products.html">Products</a>
+              <button class="submenu-control" type="button" aria-expanded="false" aria-label="Toggle products menu">
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <ul class="submenu">
+              <li><a href="top.html">Top</a></li>
+              <li><a href="bottom.html">Bottom</a></li>
+              <li><a href="accessories.html">Accessories</a></li>
+            </ul>
+          </li>
+          <li class="has-submenu inspiration-submenu">
+            <div class="submenu-header">
+              <a href="index.html#portfolio">Inspiration</a>
+              <button class="submenu-control" type="button" aria-expanded="false" aria-label="Toggle inspiration menu">
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <ul class="submenu">
+              <li><a href="news.html">News</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#contact">Help</a></li>
+        </ul>
+
+        <div class="right-icons">
+          <a
+            href="Signin.html"
+            id="userIconLink"
+            data-logged-in-href="profile.html"
+            data-logged-out-href="Signin.html"
+            data-logged-in-title="View profile"
+            data-logged-out-title="Sign in"
+          ><i class="fas fa-user"></i></a>
+          <a href="#" id="searchBtn"><i class="fas fa-search"></i></a>
+          <a href="shopping_cart.html"><i class="fas fa-shopping-cart" aria-hidden="true"></i></a>
+        </div>
+
+        <div class="search-popup" id="searchPopup">
+          <div class="search-box">
+            <button class="close-search" id="closeSearch">&times;</button>
+            <h3>Search</h3>
+            <div class="search-input">
+              <input type="text" id="searchInput" placeholder="Search products">
+            </div>
+            <div id="searchResults" class="results-container"></div>
+          </div>
+        </div>
+
+        <label for="menu-toggler" class="menu-overlay"></label>
+      </nav>
+      <script src="script.js"></script>
+      <script src="header.js"></script>
+    </header>
+
+  <!-- ======= CHECKOUT CONTENT ======= -->
+  <main class="checkout-wrap">
+    <h1>Checkout</h1>
+    <div class="grid">
+      <!-- Billing -->
+      <section class="card">
+        <h2>Billing & Shipping</h2>
+        <form id="checkoutForm" novalidate>
+          <div class="row">
+            <div>
+              <label for="firstName">First name</label>
+              <input id="firstName" required placeholder="John">
+            </div>
+            <div>
+              <label for="lastName">Last name</label>
+              <input id="lastName" required placeholder="Doe">
+            </div>
+          </div>
+
+          <label for="email">Email</label>
+          <input id="email" type="email" required placeholder="you@example.com">
+
+          <label for="phone">Phone</label>
+          <input id="phone" type="tel" required placeholder="+84 123 456 789">
+
+          <label for="address">Address</label>
+          <textarea id="address" required placeholder="123 Atelier Avenue, District 1, Ho Chi Minh City"></textarea>
+
+          <div class="row">
+            <div>
+              <label for="city">City</label>
+              <input id="city" required placeholder="Ho Chi Minh City">
+            </div>
+            <div>
+              <label for="postal">Postal Code</label>
+              <input id="postal" required placeholder="700000">
+            </div>
+          </div>
+
+          <label for="payment">Payment Method</label>
+          <select id="payment" required>
+            <option value="">Select…</option>
+            <option value="cod">Cash on Delivery (COD)</option>
+            <option value="card">Credit/Debit Card</option>
+            <option value="paypal">PayPal</option>
+          </select>
+        </form>
+      </section>
+
+      <!-- Summary -->
+      <aside class="card">
+        <h2>Your Order</h2>
+        <div id="summaryItems" class="summary-list"></div>
+        <div id="emptyBox" class="empty" style="display:none;">Your cart is empty.</div>
+
+        <div class="totals">
+          <div class="tot-row"><span>Subtotal</span><span id="sumSubtotal">$0.00</span></div>
+          <div class="tot-row"><span>Shipping</span><span id="sumShipping">$10.00</span></div>
+          <div class="tot-row total"><span>Total</span><span id="sumTotal">$0.00</span></div>
+        </div>
+
+        <button id="placeOrderBtn" class="btn-primary">Place Order</button>
+      </aside>
+    </div>
+  </main>
+
+  <div id="orderCompleteOverlay" class="order-complete-overlay" hidden>
+    <div class="order-complete-card">
+      <div class="order-complete-icon"><i class="fas fa-check"></i></div>
+      <h3>Order Completed</h3>
+      <p>Your Cash on Delivery order <strong id="orderCompleteId">INV-</strong> is confirmed.</p>
+      <p class="order-complete-countdown">Redirecting to homepage in <span id="orderCompleteCountdown">5</span> seconds...</p>
+    </div>
+  </div>
+
+  <div id="paypalOverlay" class="paypal-overlay" hidden>
+    <div class="paypal-card">
+      <div class="paypal-brand"><i class="fa-brands fa-paypal"></i></div>
+      <h3>Connecting to PayPal</h3>
+      <p>Processing order <strong id="paypalOrderId">INV-</strong></p>
+      <div class="paypal-visual">
+        <div id="paypalSpinner" class="paypal-spinner"></div>
+        <div id="paypalCheck" class="paypal-check" hidden><i class="fas fa-check"></i></div>
+      </div>
+      <p id="paypalStatus">Redirecting you to PayPal...</p>
+    </div>
+  </div>
+  <script>
+    (() => {
+      const menuToggler = document.getElementById("menu-toggler");
+      const overlay = document.querySelector(".menu-overlay");
+      const links = document.querySelectorAll(".all-links a");
+
+      overlay?.addEventListener("click", () => {
+        if (menuToggler) menuToggler.checked = false;
+      });
+      links.forEach(link => link.addEventListener("click", () => {
+        if (menuToggler) menuToggler.checked = false;
+      }));
+      const searchBtn = document.getElementById("searchBtn");
+      const searchPopup = document.getElementById("searchPopup");
+      const closeSearch = document.getElementById("closeSearch");
+
+      if (searchBtn && searchPopup) {
+        searchBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          searchPopup.classList.toggle("active");
+        });
+      }
+
+      closeSearch?.addEventListener("click", () => searchPopup?.classList.remove("active"));
+      document.addEventListener("click", (e) => {
+        if (!searchPopup || !searchBtn) return;
+        if (!searchPopup.contains(e.target) && !searchBtn.contains(e.target)) {
+          searchPopup.classList.remove("active");
+        }
+      });
+    })();
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const money = (n) => `$${(Number(n) || 0).toFixed(2)}`;
+      const params = new URLSearchParams(window.location.search);
+      const isBuyNow = params.get("mode") === "buyNow";
+      let cart = [];
+      const ORDERS_KEY = "app_orders";
+
+      const sanitizeItems = (items) => {
+        if (!Array.isArray(items)) return [];
+        return items.map((item) => ({
+          id: item?.id ?? null,
+          name: item?.name || "Item",
+          quantity: Number(item?.quantity) || 1,
+          price: Number(item?.price) || 0,
+          size: item?.size || "",
+          color: item?.color || "",
+          image: item?.image || ""
+        }));
+      };
+
+      const persistOrderHistory = (orderRecord) => {
+        try {
+          const existingRaw = localStorage.getItem(ORDERS_KEY);
+          const existing = existingRaw ? JSON.parse(existingRaw) : [];
+          const normalized = Array.isArray(existing) ? existing : [];
+          const filtered = normalized.filter((entry) => entry && entry.id !== orderRecord.id);
+          filtered.push(orderRecord);
+          localStorage.setItem(ORDERS_KEY, JSON.stringify(filtered));
+        } catch (error) {
+          console.warn("checkout: unable to persist order history", error);
+        }
+      };
+
+      const formFields = {
+        firstName: document.getElementById("firstName"),
+        lastName: document.getElementById("lastName"),
+        email: document.getElementById("email"),
+        phone: document.getElementById("phone"),
+        address: document.getElementById("address"),
+        city: document.getElementById("city"),
+        postal: document.getElementById("postal")
+      };
+
+      const paymentSelect = document.getElementById("payment");
+      const placeOrderBtn = document.getElementById("placeOrderBtn");
+      const orderOverlay = document.getElementById("orderCompleteOverlay");
+      const orderIdEl = document.getElementById("orderCompleteId");
+      const countdownEl = document.getElementById("orderCompleteCountdown");
+      const paypalOverlay = document.getElementById("paypalOverlay");
+      const paypalOrderIdEl = document.getElementById("paypalOrderId");
+      const paypalStatusEl = document.getElementById("paypalStatus");
+      const paypalSpinner = document.getElementById("paypalSpinner");
+      const paypalCheck = document.getElementById("paypalCheck");
+      let redirectTimeout = null;
+      let countdownInterval = null;
+      let paypalStageTimer = null;
+      let paypalRedirectTimer = null;
+
+      const startCodCompletion = (orderId) => {
+        if (redirectTimeout) {
+          window.clearTimeout(redirectTimeout);
+          redirectTimeout = null;
+        }
+        if (countdownInterval) {
+          window.clearInterval(countdownInterval);
+          countdownInterval = null;
+        }
+        if (paypalStageTimer) {
+          window.clearTimeout(paypalStageTimer);
+          paypalStageTimer = null;
+        }
+        if (paypalRedirectTimer) {
+          window.clearTimeout(paypalRedirectTimer);
+          paypalRedirectTimer = null;
+        }
+        if (paypalOverlay) {
+          paypalOverlay.hidden = true;
+        }
+        if (orderIdEl && orderId) {
+          orderIdEl.textContent = orderId;
+        }
+        let remaining = 5;
+        if (countdownEl) {
+          countdownEl.textContent = String(remaining);
+        }
+        if (orderOverlay) {
+          orderOverlay.hidden = false;
+        }
+        if (placeOrderBtn) {
+          placeOrderBtn.disabled = true;
+        }
+        countdownInterval = window.setInterval(() => {
+          remaining -= 1;
+          if (countdownEl) {
+            countdownEl.textContent = String(Math.max(remaining, 0));
+          }
+          if (remaining <= 0 && countdownInterval) {
+            window.clearInterval(countdownInterval);
+            countdownInterval = null;
+          }
+        }, 1000);
+        redirectTimeout = window.setTimeout(() => {
+          window.location.href = "index.html";
+        }, 5000);
+      };
+
+
+      const fillFromProfile = () => {
+        if (!window.Auth || typeof Auth.session !== "function") return;
+        const session = Auth.session();
+        if (!session?.userId) return;
+
+        const profileKey = `app_profile_${session.userId}`;
+        const profile = typeof Auth.store?.get === "function" ? Auth.store.get(profileKey, null) : null;
+        const assign = (field, value) => {
+          const next = typeof value === "string" ? value.trim() : "";
+          if (!field || !next || field.value) return;
+          field.value = next;
+        };
+
+        const displayName = (profile?.displayName || session.name || "").trim();
+        if (displayName) {
+          const parts = displayName.split(/\s+/);
+          assign(formFields.firstName, parts[0]);
+          assign(formFields.lastName, parts.slice(1).join(" "));
+        }
+
+        assign(formFields.email, profile?.email || session.email);
+        assign(formFields.phone, profile?.phone);
+        assign(formFields.address, profile?.address);
+        assign(formFields.city, profile?.city);
+        assign(formFields.postal, profile?.postalCode);
+      };
+
+      fillFromProfile();
+
+      if (isBuyNow) {
+        try {
+          const singleItem = JSON.parse(localStorage.getItem("checkoutSingleItem"));
+          if (singleItem) {
+            cart = [singleItem];
+          }
+        } catch (e) {
+          console.warn("Cannot parse checkoutSingleItem:", e);
+          cart = [];
+        }
+      } else {
+        try {
+          cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+        } catch (e) {
+          console.warn("Cannot parse cartItems:", e);
+          cart = [];
+        } finally {
+          localStorage.removeItem("checkoutSingleItem");
+        }
+      }
+
+      const summary = document.getElementById("summaryItems");
+      const emptyBox = document.getElementById("emptyBox");
+      const subtotalEl = document.getElementById("sumSubtotal");
+      const shippingEl = document.getElementById("sumShipping");
+      const totalEl = document.getElementById("sumTotal");
+      const shippingFee = cart.length > 0 ? 10 : 0;
+
+      if (cart.length === 0) {
+        summary.innerHTML = "";
+        emptyBox.textContent = isBuyNow
+          ? "Selected product could not be loaded. Please try again."
+          : "Your cart is empty.";
+        emptyBox.style.display = "block";
+        subtotalEl.textContent = money(0);
+        shippingEl.textContent = money(0);
+        totalEl.textContent = money(0);
+        if (isBuyNow) {
+          localStorage.removeItem("checkoutSingleItem");
+        }
+      } else {
+        emptyBox.style.display = "none";
+        let subtotal = 0;
+        summary.innerHTML = cart.map(item => {
+          const line = (item.price || 0) * (item.quantity || 1);
+          subtotal += line;
+          const img = item.image ? `<img class="thumb" src="${item.image}" alt="">` : "";
+          const meta = `${(item.color||'default')} / ${(item.size||'M')} × ${(item.quantity||1)}`;
+          return `
+            <div class="sum-item">
+              <div class="sum-info">
+                ${img}
+                <div>
+                  <div class="sum-name">${item.name || "Item"}</div>
+                  <div class="sum-meta">${meta}</div>
+                </div>
+              </div>
+              <div class="sum-price">${money(line)}</div>
+            </div>
+          `;
+        }).join("");
+
+        subtotalEl.textContent = money(subtotal);
+        shippingEl.textContent = money(shippingFee);
+        totalEl.textContent = money(subtotal + shippingFee);
+      }
+
+      function startPaypalFlow(orderId) {
+        if (redirectTimeout) {
+          window.clearTimeout(redirectTimeout);
+          redirectTimeout = null;
+        }
+        if (countdownInterval) {
+          window.clearInterval(countdownInterval);
+          countdownInterval = null;
+        }
+        if (orderOverlay) {
+          orderOverlay.hidden = true;
+        }
+        if (paypalStageTimer) {
+          window.clearTimeout(paypalStageTimer);
+        }
+        if (paypalRedirectTimer) {
+          window.clearTimeout(paypalRedirectTimer);
+        }
+        paypalStageTimer = null;
+        paypalRedirectTimer = null;
+        if (paypalOrderIdEl && orderId) {
+          paypalOrderIdEl.textContent = orderId;
+        }
+        if (paypalSpinner) {
+          paypalSpinner.hidden = false;
+        }
+        if (paypalCheck) {
+          paypalCheck.hidden = true;
+        }
+        if (paypalStatusEl) {
+          paypalStatusEl.textContent = "Redirecting you to PayPal...";
+        }
+        if (paypalOverlay) {
+          paypalOverlay.hidden = false;
+        }
+        paypalStageTimer = window.setTimeout(() => {
+          if (paypalSpinner) {
+            paypalSpinner.hidden = true;
+          }
+          if (paypalCheck) {
+            paypalCheck.hidden = false;
+          }
+          if (paypalStatusEl) {
+            paypalStatusEl.textContent = "Payment authorized. Finalizing your order...";
+          }
+          paypalRedirectTimer = window.setTimeout(() => {
+            window.location.href = "Receipt.html";
+          }, 2000);
+        }, 2500);
+      }
+
+      if (!placeOrderBtn) return;
+
+      placeOrderBtn.addEventListener("click", () => {
+        const form = document.getElementById("checkoutForm");
+        if (!form.checkValidity()) {
+            if (typeof form.reportValidity === "function") {
+              form.reportValidity();
+            }
+            alert("Please complete all required fields.");
+            return;
+        }
+
+        placeOrderBtn.disabled = true;
+
+        const subtotal = parseFloat(document.getElementById("sumSubtotal").textContent.replace("$", "")) || 0;
+        const shipping = parseFloat(document.getElementById("sumShipping").textContent.replace("$", "")) || 0;
+        const total = subtotal + shipping;
+        const paymentMethod = paymentSelect?.value || "";
+        const sessionData = window.Auth && typeof Auth.session === "function" ? Auth.session() : null;
+        const now = Date.now();
+        const orderId = `ORD-${now}`;
+        const items = sanitizeItems(cart);
+        const customerName = `${(formFields.firstName.value || "").trim()} ${(formFields.lastName.value || "").trim()}`.trim();
+
+        const order = {
+            id: orderId,
+            cart,
+            items,
+            subtotal,
+            shipping,
+            total,
+            mode: isBuyNow ? "buyNow" : "cart",
+            paymentMethod,
+            userId: sessionData?.userId || "guest",
+            userEmail: sessionData?.email || (formFields.email?.value || "").trim(),
+            customerName,
+            placedAt: now,
+            estimatedDelivery: now + 1000 * 60 * 60 * 24 * 3,
+            status: "Processing",
+            address: {
+              line1: (formFields.address?.value || "").trim(),
+              city: (formFields.city?.value || "").trim(),
+              postalCode: (formFields.postal?.value || "").trim(),
+              phone: (formFields.phone?.value || "").trim()
+            }
+        };
+
+        persistOrderHistory(order);
+
+        localStorage.setItem("latestOrder", JSON.stringify(order));
+
+        if (isBuyNow) {
+          localStorage.removeItem("checkoutSingleItem");
+        } else {
+          localStorage.removeItem("cartItems");
+        }
+
+        if (paymentMethod === "cod") {
+          startCodCompletion(order.id);
+          return;
+        }
+
+        if (paymentMethod === "paypal") {
+          startPaypalFlow(order.id);
+          return;
+        }
+
+        window.location.href = "Receipt.html";
+      });
+    });
+  </script>
+  <script src="include-footer.js"></script>
+</body>
+</html>
+
+

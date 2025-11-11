@@ -1,0 +1,139 @@
+[
+  {
+    "id": 1,
+    "name": "Wool Leather Bag",
+    "price": 159,
+    "salePrice": 139,
+    "status": "available",
+    "image": "images/Accessories/Wool_Leather_Bag.jpg",
+    "hoverImage": "images/Accessories/mau_wool_leather_bag.png",
+    "gallery": ["images/Accessories/mau_wool_leather_bag.png"],
+    "description": "Compact shoulder bag combining soft wool texture with smooth leather trims for refined daily use.",
+    "details": ["Magnetic flap closure", "Internal pocket for essentials"]
+  },
+  {
+    "id": 2,
+    "name": "Brown Wool Leather Bag",
+    "price": 165,
+    "salePrice": 149,
+    "status": "available",
+    "image": "images/Accessories/Brown_Wool_Leather_Bag.jpg",
+    "hoverImage": "images/Accessories/mau_brown_wool_leather_bag.png",
+    "gallery": ["images/Accessories/mau_brown_wool_leather_bag.png"],
+    "description": "Warm brown wool body with tonal leather strap and base for a balanced, minimalist design.",
+    "details": ["Adjustable shoulder strap", "Soft fabric lining"]
+  },
+  {
+    "id": 3,
+    "name": "Denim Bag",
+    "price": 119,
+    "salePrice": 99,
+    "status": "available",
+    "image": "images/Accessories/Denim_Bag.jpg",
+    "hoverImage": "images/Accessories/mau_demin_bag.png",
+    "gallery": ["images/Accessories/mau_demin_bag.png"],
+    "description": "Casual denim tote with reinforced handles and contrast topstitching for durable daily wear.",
+    "details": ["Washed denim texture", "Interior zip pocket"]
+  },
+  {
+    "id": 4,
+    "name": "Leather Hobo Bag",
+    "price": 189,
+    "status": "sold-out",
+    "image": "images/Accessories/Leather_Hobo_Bag.jpg",
+    "hoverImage": "images/Accessories/mau_leather_hobo_bag.png",
+    "gallery": ["images/Accessories/mau_leather_hobo_bag.png"],
+    "description": "Slouchy hobo silhouette in supple leather for effortless elegance.",
+    "details": ["Top zipper closure", "Removable shoulder strap"]
+  },
+  {
+    "id": 5,
+    "name": "Basic Leather Bag",
+    "price": 149,
+    "salePrice": 129,
+    "status": "available",
+    "image": "images/Accessories/Basic_Leather_Bag.jpg",
+    "hoverImage": "images/Accessories/mau_basic_leather_bag.png",
+    "gallery": ["images/Accessories/mau_basic_leather_bag.png"],
+    "description": "Clean, structured leather handbag with minimal seams and timeless design.",
+    "details": ["Reinforced handle base", "Magnetic snap closure"]
+  },
+  {
+    "id": 6,
+    "name": "Glass 01",
+    "price": 89,
+    "status": "sold-out",
+    "image": "images/Accessories/glass 01.jpg",
+    "hoverImage": "images/Accessories/mau_glass1.png",
+    "gallery": [
+      "images/Accessories/mau_glass1.png",
+      "images/Accessories/glass_1_1.png",
+      "images/Accessories/glass_1_2.png"
+    ],
+    "description": "Rectangular acetate sunglasses with beveled edges and subtle contrast temples.",
+    "details": ["UV400 protective lenses", "Spring metal hinges"]
+  },
+  {
+    "id": 7,
+    "name": "Glass 02",
+    "price": 89,
+    "salePrice": 79,
+    "status": "available",
+    "image": "images/Accessories/glass 02.jpg",
+    "hoverImage": "images/Accessories/mau_glass2.png",
+    "gallery": [
+      "images/Accessories/mau_glass2.png",
+      "images/Accessories/glass_2_1.png",
+      "images/Accessories/glass_2_2.png"
+    ],
+    "description": "Rounded frame sunglasses with modern slim temples, lightweight and balanced.",
+    "details": ["Scratch-resistant coating", "Adjustable nose pads"]
+  },
+  {
+    "id": 8,
+    "name": "Glass 03",
+    "price": 95,
+    "salePrice": 82,
+    "status": "available",
+    "image": "images/Accessories/glass 03.jpg",
+    "hoverImage": "images/Accessories/mau_glass3.png",
+    "gallery": [
+      "images/Accessories/mau_glass3.png",
+      "images/Accessories/glass_3_1.png",
+      "images/Accessories/glass_3_2.png"
+    ],
+    "description": "Slim oval sunglasses with a refined bridge and subtle retro charm.",
+    "details": ["Lightweight metal frame", "Anti-glare finish lenses"]
+  },
+  {
+    "id": 9,
+    "name": "Glass 04",
+    "price": 95,
+    "status": "available",
+    "image": "images/Accessories/glass 04.png",
+    "hoverImage": "images/Accessories/mau_glass4.png",
+    "gallery": [
+      "images/Accessories/mau_glass4.png",
+      "images/Accessories/glass_4_1.png",
+      "images/Accessories/glass_4_2.webp"
+    ],
+    "description": "Square wayfarer sunglasses for a bold but clean summer aesthetic.",
+    "details": ["UV400 lenses", "Durable frame with 5-barrel hinges"]
+  },
+  {
+    "id": 10,
+    "name": "Glass 05",
+    "price": 99,
+    "salePrice": 84,
+    "status": "available",
+    "image": "images/Accessories/glass 05.jpg",
+    "hoverImage": "images/Accessories/mau_glass5.png",
+    "gallery": [
+      "images/Accessories/mau_glass5.png",
+      "images/Accessories/glass_5_1.jpg",
+      "images/Accessories/glass_5_2.jpg"
+    ],
+    "description": "Aviator-inspired frame with flatter top bar and soft lens tint for a balanced silhouette.",
+    "details": ["Polarized lenses reduce glare", "Stainless steel temples"]
+  }
+]

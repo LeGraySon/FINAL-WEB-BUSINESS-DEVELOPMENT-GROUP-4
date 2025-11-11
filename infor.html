@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang='vi'>
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>Streetvibe Articles Board</title>
+  <link rel='preconnect' href='https://streetvibe.vn' />
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: 'Space Grotesk', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --bg: #040404;
+      --card: #121212;
+      --muted: #b3b3b3;
+      --accent: #f7d354;
+      --border: rgba(255, 255, 255, 0.08);
+      --gradient: linear-gradient(135deg, #111 0%, #2d2d2d 40%, #111 100%);
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: #f7f7f2;
+      line-height: 1.6;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+    a {
+      color: inherit;
+    }
+    .hero {
+      padding: 4rem 1.5rem 3rem;
+      background: var(--gradient);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero__content {
+      max-width: 64rem;
+      margin: 0 auto;
+    }
+    .hero__eyebrow {
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .hero h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+    }
+    .layout {
+      max-width: 70rem;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+    .page-lede {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (min-width: 768px) {
+      .page-lede {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+    }
+    .search {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      width: min(22rem, 100%);
+    }
+    .search span {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .search input {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: inherit;
+      padding: 0.9rem 1rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      transition: border-color 0.2s ease;
+    }
+    .search input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .status-banner {
+      background: rgba(247, 211, 84, 0.08);
+      border: 1px solid rgba(247, 211, 84, 0.3);
+      color: var(--accent);
+      padding: 0.9rem 1rem;
+      border-radius: 0.75rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .article-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      box-shadow: 0 25px 40px rgba(0, 0, 0, 0.45);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .article-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(247, 211, 84, 0.5);
+    }
+    .article-card__media {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+    }
+    .article-card__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .article-card__body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      flex: 1;
+    }
+    .article-card__meta {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin: 0;
+    }
+    .article-card__body h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      line-height: 1.4;
+    }
+    .article-card__excerpt {
+      margin: 0;
+      color: #e2e2dd;
+      flex: 1;
+    }
+    .article-card__link {
+      width: fit-content;
+      color: #050505;
+      background: var(--accent);
+      padding: 0.65rem 1.25rem;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .article-card__link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(247, 211, 84, 0.4);
+    }
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 2rem;
+      border: 1px dashed var(--border);
+      border-radius: 1rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header class='hero'>
+    <div class='hero__content'>
+      <p class='hero__eyebrow'>Streetvibe radar</p>
+      <h1 data-copy='hero-title'>Streetvibe bulletin</h1>
+      <p data-copy='hero-lead'>Curating the latest notes from streetvibe.vn...</p>
+    </div>
+  </header>
+  <main class='layout'>
+    <section class='page-lede'>
+      <div>
+        <h2 data-copy='lede-heading'>Streetvibe posts</h2>
+        <p data-copy='lede-desc'>Danh sach se duoc cap nhat sau khi script chay.</p>
+      </div>
+      <label class='search'>
+        <span data-copy='search-label'>Search posts</span>
+        <input id='search' type='search' placeholder='Search Streetvibe...' autocomplete='off' />
+      </label>
+    </section>
+    <p id='status' class='status-banner' role='status'></p>
+    <section id='articles' class='articles-grid' aria-live='polite'></section>
+  </main>
+
+<script id='article-data' type='application/json'>
+[
+  {
+    "title": "Vans Premium Old Skool &#8211; Làn gió mới trong chiến dịch “NEW FUTURE”",
+    "link": "https://streetvibe.vn/vans-premium-old-skool-lan-gio-moi-trong-chien-dich-premium-old-skool-lan-gio-moi-trong-trong-chien-dich-new-future/",
+    "excerpt": "<p>Hiện tại, “New Future” đang được trưng bày tại các kênh phân phối chính hãng Sneaker Buzz – đối tác cấp cao của Vans Vietnam.</p>",
+    "image": "http://streetvibe.vn/wp-content/uploads/2025/10/Streetvibe-thumb-900x619-1.jpg",
+    "date": "2025-10-29T09:00:00"
+  },
+  {
+    "title": "H&amp;M và chiến dịch thời trang thật &#8211; ngôn ngữ mới của ngành",
+    "link": "https://streetvibe.vn/hm-va-chien-dich-thoi-trang-that-ngon-ngu-moi-cua-nganh/",
+    "excerpt": "<p>Tại Tuần lễ Thời trang Paris năm nay, H&#038;M đã làm điều mà ít thương hiệu dám thử — biến đường phố thành sàn diễn, và biến những khoảnh khắc “chạy show của model” thành tâm điểm trình diễn.</p>",
+    "image": "http://streetvibe.vn/wp-content/uploads/2025/10/image-2-1024x682.png",
+    "date": "2025-10-16T16:35:19"
+  },
+  {
+    "title": "Sự trở lại của giày Peeptoe – Hoài niệm hay vấn đề kinh tế?",
+    "link": "https://streetvibe.vn/su-tro-lai-cua-giay-peeptoe-hoai-niem-hay-van-de-kinh-te/",
+    "excerpt": "<p>Sự trở lại của giày peeptoe không chỉ là chuyện thẩm mỹ. Nó cho thấy cách thời trang vận hành như một vòng tuần hoàn&#8230;</p>",
+    "image": "http://streetvibe.vn/wp-content/uploads/2025/10/image-18.png",
+    "date": "2025-10-14T15:04:15"
+  },
+  {
+    "title": "Rick Owens Woman Spring Summer 2026: Sự khải hoàn của vẻ đẹp tàn bạo",
+    "link": "https://streetvibe.vn/rick-owens-spring-summer-2026/",
+    "excerpt": "<p>Rick Owens Woman Spring Summer 2026 đã chính thức khai mở với tiêu đề &#8220;Temple&#8221;, như một nghi lễ trình diễn tại Paris Fashion Week, tái định nghĩa lại sự giao thoa giữa thời trang và nghệ thuật. </p>",
+    "image": "http://streetvibe.vn/wp-content/uploads/2025/10/get.jpg",
+    "date": "2025-10-10T14:41:45"
+  },
+  {
+    "title": "Giải mã Dior Spring 26: Di sản, sáng tạo và khoảng lặng cần thiết",
+    "link": "https://streetvibe.vn/giai-ma-dior-spring-26-di-san-sang-tao-va-khoang-lang-can-thiet/",
+    "excerpt": "<p>Sự xuất hiện của Jonathan Anderson tại Dior đánh dấu một bước ngoặt quan trọng trong lịch sử lâu đời của nhà mốt Pháp. Sau gần một thập kỷ gắn bó của Maria Grazia Chiuri, người phụ nữ đầu tiên ngồi ghế Giám đốc sáng tạo của Dior, thương hiệu bước vào giai đoạn chuyển [&hellip;]</p>",
+    "image": "http://streetvibe.vn/wp-content/uploads/2025/10/Screenshot-2025-10-05-110424.png",
+    "date": "2025-10-05T16:03:29"
+  },
+  {
+    "title": "Phan Dang Hoang Spring Summer 2026: &#8220;Lacquer &#8220;- Hồn Việt trong vệt sơn mài",
+    "link": "https://streetvibe.vn/phan-dang-hoang-spring-summer-2026/",
+    "excerpt": "<p>Tuần lễ thời trang Milan Xuân Hè 2026, Phan Dang Hoang một lần nữa thắp lên ánh sáng Đông Phương thông qua bộ sưu tập  Spring Summer 2026: &#8220;Lacquer &#8220;</p>",
+    "image": "http://streetvibe.vn/wp-content/uploads/2025/09/dc467299fb194822b648e1dccf8cf375.webp",
+    "date": "2025-10-01T12:08:37"
+  },
+  {
+    "title": "Diesel Spring Summer 2026: Cuộc săn trứng của Glenn Martens",
+    "link": "https://streetvibe.vn/diesel-spring-summer-2026/",
+    "excerpt": "<p>Glenn Martens, một trong những nhà thiết kế tiên phong, đã khiến giới mộ điệu phải nín thở chờ đợi với màn trình diễn 3 không: không sàn diễn &#8211; không catwalk &#8211; không khách mời trong bst Diesel Spring Summer 2026. </p>",
+    "image": "http://streetvibe.vn/wp-content/uploads/2025/09/1758778859_diesel_1758650704_3728154783405311264_190864429-jpg.jpg",
+    "date": "2025-09-30T15:18:03"
+  },
+  {
+    "title": "Thời trang nam đang bước vào kỷ nguyên &#8220;phi nam tính&#8221;?",
+    "link": "https://streetvibe.vn/thoi-trang-nam-dang-buoc-vao-ky-nguyen-phi-nam-tinh/",
+    "excerpt": "<p>Trong vài mùa gần đây, Balletcore – xu hướng lấy cảm hứng từ vũ đạo ballet – không chỉ xuất hiện trong womenswear mà còn bắt đầu len lỏi vào menswear, với tâm điểm là giày ballet (ballet flats / ballet shoes)</p>",
+    "image": "http://streetvibe.vn/wp-content/uploads/2025/09/image-33.png",
+    "date": "2025-09-28T16:39:34"
+  },
+  {
+    "title": "Hiroaki Ohya — Người học trò tài năng của Issey Miyake",
+    "link": "https://streetvibe.vn/hiroaki-ohya-nguoi-hoc-tro-tai-nang-cua-issey-miyake/",
+    "excerpt": "<p>Vậy rốt cuộc, Hiroaki Ohya có phải là một nhà thiết kế không? Hay ông là một người làm sách, một nghệ sĩ thị giác, một storyteller&#8230;</p>",
+    "image": "http://streetvibe.vn/wp-content/uploads/2025/07/image-59.png",
+    "date": "2025-09-24T12:00:37"
+  },
+  {
+    "title": "Drop Culture: Di sản của Hiroshi Fujiwara tại sân chơi Nhật Bản",
+    "link": "https://streetvibe.vn/drop-culture-di-san-cua-hiroshi-fujiwara-tai-san-choi-nhat-ban/",
+    "excerpt": "<p>Câu hỏi đặt ra là: drop culture thực sự là sáng tạo hay chỉ là một chiêu trò tiêu dùng?  Câu trả lời có lẽ nằm ở&#8230;</p>",
+    "image": "https://streetvibe.vn/wp-content/uploads/2025/09/image-13.png",
+    "date": "2025-09-17T17:02:30"
+  },
+  {
+    "title": "Steampunk: &#8220;Sợi chỉ đỏ&#8221; liên kết cấu trúc hoài cổ và tương lai",
+    "link": "https://streetvibe.vn/steampunk-soi-chi-do-lien-ket-cau-truc-hoai-co-va-tuong-lai/",
+    "excerpt": "<p>Hơn cả việc đính hàng tá linh kiện, máy móc cũ xưa vào từng trang phục quần áo, phụ kiện thời trang, steampunk là một phong cách lột tả rõ nét cá tính riêng, là nghệ thuật thiết kế luôn hướng về sự tiến bộ, về tương lai.</p>",
+    "image": "http://streetvibe.vn/wp-content/uploads/2022/12/531340246_2270462386737280_8928181256233918395_n.jpg",
+    "date": "2025-09-11T11:59:00"
+  },
+  {
+    "title": "Pierre Cardin &#8211; Young Designers Award 2025: Sân Chơi quốc tế dành cho nhà thiết kế thời trang trẻ tại Việt Nam",
+    "link": "https://streetvibe.vn/pierre-cardin-young-designers-award-2025-san-choi-quoc-te-danh-cho-nha-thiet-ke-thoi-trang-tre-tai-viet-nam/",
+    "excerpt": "<p>Pierre Cardin Young Designers Award 2025 chính là cơ hội vàng để bạn biến giấc mơ đó thành hiện thực.</p>",
+    "image": "http://streetvibe.vn/wp-content/uploads/2025/09/542155710_1084285223900100_2881381226560600394_n.jpg",
+    "date": "2025-09-09T15:16:07"
+  },
+  {
+    "title": "Local Brand Việt Nam S.G.S bị tố &#8220;ăn cắp ý tưởng&#8221; của một thương hiệu về lịch sử và văn hóa con người Việt Nam",
+    "link": "https://streetvibe.vn/local-brand-viet-nam-an-cap-y-tuong/",
+    "excerpt": "<p>Local brand Việt Nam có đang thực sự cạn kiệt ý tưởng? Vừa qua thương hiệu thời trang S.G.S bị tố &#8220;ăn cắp ý tưởng&#8221; thiết kế cho sản phẩm túi tote nhận lễ kỷ niệm 80 năm quốc khánh 2 Tháng 9 của thương hiệu &#8220;Soulvenir&#8221;</p>",
+    "image": "http://streetvibe.vn/wp-content/uploads/2025/09/Cam-on-Nha-Trang.-Cam-on-@seponcentre-va-@byclyde_-nhieu-lam.-Hen-cac-ban-lan-sau-nhe.jpg",
+    "date": "2025-09-06T16:54:47"
+  },
+  {
+    "title": "Ngưng tranh cãi: Alexander McQueen đã và sẽ mãi không còn như trước!",
+    "link": "https://streetvibe.vn/ngung-tranh-cai-alexander-mcqueen-da-va-se-mai-khong-con-nhu-truoc/",
+    "excerpt": "<p>Kể từ khi Lee Alexander McQueen đột ngột qua đời vào năm 2010, mỗi mùa thời trang của nhà mốt này đều nhận về những điệp khúc quen thuộc trên mạng xã hội: “Đây không phải là Alexander McQueen”</p>",
+    "image": "http://streetvibe.vn/wp-content/uploads/2025/08/image-66-1024x791.png",
+    "date": "2025-09-02T09:33:23"
+  }
+]
+</script>
+<script>
+(() => {
+  const API_URL = 'https://streetvibe.vn/wp-json/wp/v2/posts?per_page=14';
+  const PLACEHOLDER_IMAGE = 'https://placehold.co/720x480/121212/FFFFFF?text=Streetvibe';
+  const copy = {
+    heroTitle: '\u0042\u1ea3ng tin Streetvibe',
+    heroLead: '\u0054\u1ef1 \u0111\u1ed9ng t\u1ed5ng h\u1ee3p c\u00e1c b\u00e0i vi\u1ebft m\u1edbi nh\u1ea5t t\u1eeb streetvibe.vn \u0111\u1ec3 b\u1ea1n c\u00f3 th\u1ec3 r\u00e0 so\u00e1t c\u1ea3m h\u1ee9ng th\u1eddi trang, tin t\u1ee9c v\u0103n h\u00f3a v\u00e0 nh\u1eefng chuy\u1ec7n h\u1eadu tr\u01b0\u1eddng ch\u1ec9 trong m\u1ed9t trang duy nh\u1ea5t.',
+    ledeHeading: '14 b\u00e0i vi\u1ebft n\u1ed5i b\u1eadt',
+    ledeDesc: 'Danh s\u00e1ch \u0111\u01b0\u1ee3c l\u00e0m s\u1ea1ch t\u1eeb API WordPress c\u1ee7a Streetvibe. B\u1ea1n c\u00f3 th\u1ec3 t\u00ecm ki\u1ebfm theo t\u1eeb kh\u00f3a ho\u1eb7c m\u1edf tr\u1ef1c ti\u1ebfp b\u00e0i vi\u1ebft g\u1ed1c.',
+    searchLabel: 'T\u00ecm ki\u1ebfm b\u00e0i vi\u1ebft',
+    searchPlaceholder: 'Nh\u1eadp t\u1eeb kh\u00f3a nh\u01b0 \u201cDiesel\u201d, \u201cRick Owens\u201d, \u201cStreetwear\u201d...',
+    statusPrefill: '\u0110ang hi\u1ec3n th\u1ecb d\u1eef li\u1ec7u \u0111\u00e3 l\u01b0u t\u1ea1m th\u1eddi.',
+    statusHydrating: '\u0110ang t\u1ea3i d\u1eef li\u1ec7u tr\u1ef1c ti\u1ebfp t\u1eeb Streetvibe...',
+    statusLive: 'Hi\u1ec3n th\u1ecb d\u1eef li\u1ec7u m\u1edbi nh\u1ea5t t\u1eeb Streetvibe.',
+    statusOffline: 'Kh\u00f4ng th\u1ec3 k\u1ebft n\u1ed1i Streetvibe, \u0111ang d\u00f9ng d\u1eef li\u1ec7u \u0111\u00e3 l\u01b0u.',
+    statusErrorLog: 'Kh\u00f4ng th\u1ec3 c\u1eadp nh\u1eadt d\u1eef li\u1ec7u Streetvibe',
+    emptyState: 'Kh\u00f4ng t\u00ecm th\u1ea5y b\u00e0i vi\u1ebft n\u00e0o v\u1edbi t\u1eeb kh\u00f3a n\u00e0y.',
+    ctaLabel: '\u0110\u1ecdc b\u00e0i vi\u1ebft tr\u00ean Streetvibe'
+  };
+
+  const applyCopy = () => {
+    const pairs = [
+      ['hero-title', 'heroTitle'],
+      ['hero-lead', 'heroLead'],
+      ['lede-heading', 'ledeHeading'],
+      ['lede-desc', 'ledeDesc'],
+      ['search-label', 'searchLabel']
+    ];
+    pairs.forEach(([attr, key]) => {
+      const node = document.querySelector(`[data-copy="${attr}"]`);
+      if (node) node.textContent = copy[key];
+    });
+    const searchField = document.getElementById('search');
+    if (searchField) searchField.placeholder = copy.searchPlaceholder;
+  };
+
+  applyCopy();
+
+  const fallbackArticles = JSON.parse(document.getElementById('article-data').textContent);
+  const grid = document.getElementById('articles');
+  const statusBanner = document.getElementById('status');
+  const searchInput = document.getElementById('search');
+  let normalizedArticles = [];
+
+  const htmlDecoder = document.createElement('textarea');
+  const decodeHTML = (value = '') => {
+    htmlDecoder.innerHTML = value;
+    return htmlDecoder.value;
+  };
+
+  const stripHTML = (html = '') => {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    return temp.textContent?.trim() ?? '';
+  };
+
+  const formatDate = (value) => {
+    if (!value) return 'Streetvibe';
+    const date = new Date(value);
+    if (Number.isNaN(date)) return 'Streetvibe';
+    return new Intl.DateTimeFormat('vi-VN', { dateStyle: 'medium' }).format(date);
+  };
+
+  const truncate = (text = '', max = 180) => {
+    if (text.length <= max) return text;
+    return `${text.slice(0, max).trim()}?`;
+  };
+
+  const normalizeArticle = (raw) => {
+    const titleHTML = raw?.title?.rendered ?? raw?.title ?? 'B\u00e0i vi\u1ebft Streetvibe';
+    const excerptHTML = raw?.excerpt?.rendered ?? raw?.excerpt ?? '';
+    return {
+      titleHTML,
+      titlePlain: decodeHTML(titleHTML),
+      excerptPlain: stripHTML(excerptHTML),
+      link: raw?.link ?? raw?.url ?? '#',
+      image: raw?.yoast_head_json?.og_image?.[0]?.url ?? raw?.image ?? '',
+      date: raw?.date ?? null
+    };
+  };
+
+  const createCard = (article) => {
+    const card = document.createElement('article');
+    card.className = 'article-card';
+
+    const media = document.createElement('div');
+    media.className = 'article-card__media';
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.src = article.image || PLACEHOLDER_IMAGE;
+    img.alt = article.titlePlain;
+    media.appendChild(img);
+
+    const body = document.createElement('div');
+    body.className = 'article-card__body';
+
+    const meta = document.createElement('p');
+    meta.className = 'article-card__meta';
+    meta.textContent = formatDate(article.date);
+
+    const title = document.createElement('h3');
+    title.innerHTML = article.titleHTML;
+
+    const excerpt = document.createElement('p');
+    excerpt.className = 'article-card__excerpt';
+    excerpt.textContent = truncate(article.excerptPlain, 180);
+
+    const link = document.createElement('a');
+    link.className = 'article-card__link';
+    link.href = article.link;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = copy.ctaLabel;
+
+    body.append(meta, title, excerpt, link);
+    card.append(media, body);
+    return card;
+  };
+
+  const draw = (list) => {
+    grid.innerHTML = '';
+    if (!list.length) {
+      const empty = document.createElement('p');
+      empty.className = 'empty-state';
+      empty.textContent = copy.emptyState;
+      grid.append(empty);
+      return;
+    }
+    const fragment = document.createDocumentFragment();
+    list.forEach((item) => fragment.append(createCard(item)));
+    grid.append(fragment);
+  };
+
+  const applyFilter = () => {
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) {
+      draw(normalizedArticles);
+      return;
+    }
+    const filtered = normalizedArticles.filter((article) =>
+      article.titlePlain.toLowerCase().includes(query) ||
+      article.excerptPlain.toLowerCase().includes(query)
+    );
+    draw(filtered);
+  };
+
+  const hydrate = async () => {
+    statusBanner.textContent = copy.statusHydrating;
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const payload = await response.json();
+      normalizedArticles = payload.map(normalizeArticle);
+      statusBanner.textContent = copy.statusLive;
+      applyFilter();
+    } catch (error) {
+      console.error(copy.statusErrorLog, error);
+      statusBanner.textContent = copy.statusOffline;
+    }
+  };
+
+  normalizedArticles = fallbackArticles.map(normalizeArticle);
+  draw(normalizedArticles);
+  statusBanner.textContent = copy.statusPrefill;
+  searchInput.addEventListener('input', applyFilter);
+  hydrate();
+})();
+</script>
+</body>
+</html>

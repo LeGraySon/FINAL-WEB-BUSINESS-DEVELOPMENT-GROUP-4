@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: #D2D2D2;
+            background-image: url(images/Backdrop.jpg)
+            repeating-linear-gradient(
+                to right, transparent 0 100px,
+                #25283b22 100px 101px
+            ),
+            repeating-linear-gradient(
+                to bottom, transparent 0 100px,
+                #25283b22 100px 101px
+            );
+        }
+        
+        body::before{
+            position: absolute;
+            width: min(1400px, 90vw);
+            top: 10%;
+            left: 50%;
+            height: 90%;
+            transform: translateX(-50%);
+            content: '';
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: top center;
+            pointer-events: none;
+        }
+    </style>
+    <link rel="stylesheet" href="style_intro.css">
+</head>
+<body>
+    <div class="banner">
+        <div class="slider" style="--quantity: 10">
+            <div class="item" style="--position: 1"><img src="images_intro/model01.png" alt=""></div>
+            <div class="item" style="--position: 2"><img src="images_intro/model02.png" alt=""></div>
+            <div class="item" style="--position: 3"><img src="images_intro/model03.png" alt=""></div>
+            <div class="item" style="--position: 4"><img src="images_intro/model04.png" alt=""></div>
+            <div class="item" style="--position: 5"><img src="images_intro/model05.png" alt=""></div>
+            <div class="item" style="--position: 6"><img src="images_intro/model06.png" alt=""></div>
+            <div class="item" style="--position: 7"><img src="images_intro/model07.png" alt=""></div>
+            <div class="item" style="--position: 8"><img src="images_intro/model08.png" alt=""></div>
+            <div class="item" style="--position: 9"><img src="images_intro/model09.png" alt=""></div>
+            <div class="item" style="--position: 10"><img src="images_intro/model10.png" alt=""></div>
+        </div>
+        <div class="content">
+            <h1 data-content="AVANT-A ">
+                AVANT-A
+            </h1>
+            <div class="author">
+                <h2></h2>
+                <p><b>Maison Noir</b></p>
+                <p>
+                    Fashion is more about feel than science.
+                </p>
+            </div>
+            <div class="model"></div>
+        </div>
+    </div>
+    <div class="portal-overlay" aria-hidden="true">
+        <div class="portal-ring"></div>
+    </div>
+    <div class="enter-hint">Press anything to hit the store</div>
+    <script>
+        (() => {
+            const targetUrl = "index.html";
+            const portalDuration = 1200;
+            const body = document.body;
+            const hint = document.querySelector(".enter-hint");
+            let portalTriggered = false;
+
+            const ambient = {
+                ctx: null,
+                osc: null,
+                gain: null,
+                failed: false
+            };
+
+            const ensureAmbientAudio = (options = {}) => {
+                if (ambient.failed) return;
+                if (!ambient.ctx) {
+                    try {
+                        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                        if (!AudioCtx) {
+                            ambient.failed = true;
+                            return;
+                        }
+                        ambient.ctx = new AudioCtx();
+                        ambient.osc = ambient.ctx.createOscillator();
+                        ambient.osc.type = "sine";
+                        ambient.osc.frequency.value = 65;
+                        const filter = ambient.ctx.createBiquadFilter();
+                        filter.type = "lowpass";
+                        filter.frequency.value = 260;
+                        ambient.gain = ambient.ctx.createGain();
+                        ambient.gain.gain.value = 0;
+                        ambient.osc.connect(filter).connect(ambient.gain).connect(ambient.ctx.destination);
+                        ambient.osc.start();
+                    } catch (error) {
+                        console.warn("Ambient audio unavailable:", error);
+                        ambient.failed = true;
+                        return;
+                    }
+                }
+
+                if (ambient.ctx.state === "suspended") {
+                    ambient.ctx.resume();
+                }
+
+                const now = ambient.ctx.currentTime;
+                const target = options.boost ? 0.08 : 0.035;
+                const duration = options.boost ? 0.6 : 2.5;
+                ambient.gain.gain.cancelScheduledValues(now);
+                ambient.gain.gain.setValueAtTime(ambient.gain.gain.value, now);
+                ambient.gain.gain.linearRampToValueAtTime(target, now + duration);
+            };
+
+            const triggerPortal = () => {
+                if (portalTriggered) return;
+                portalTriggered = true;
+                body.classList.add("portal-active");
+                ensureAmbientAudio({ boost: true });
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, portalDuration);
+            };
+
+            window.addEventListener("keydown", (event) => {
+                ensureAmbientAudio();
+                const ignoredKeys = ["F5", "F12", "Escape"];
+                if (event.metaKey || event.ctrlKey || event.altKey) return;
+                if (ignoredKeys.includes(event.key)) return;
+                event.preventDefault();
+                triggerPortal();
+            });
+
+            window.addEventListener("wheel", () => {
+                ensureAmbientAudio();
+                triggerPortal();
+            }, { passive: true });
+
+            window.addEventListener("touchstart", () => {
+                ensureAmbientAudio();
+            }, { once: true, passive: true });
+
+            window.addEventListener("pointermove", () => {
+                ensureAmbientAudio();
+            }, { once: true });
+
+            if (hint) {
+                hint.addEventListener("click", () => {
+                    ensureAmbientAudio();
+                    triggerPortal();
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

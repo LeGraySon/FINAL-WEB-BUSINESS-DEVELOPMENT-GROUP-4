@@ -1,0 +1,50 @@
+<html>
+    <title>Include Header</title>
+    <head>
+        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+     </head>
+     <body>
+        <header>
+        <nav class="navbar">
+            <input type="checkbox" id="menu-toggler">
+            <label for="menu-toggler" id="hamburger-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24px" height="24px">
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M3 18h18v-2H3v2zm0-5h18V11H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+            </label>
+            <h1 class="logo"><a href="index.html" aria-label="Avant Atelier Home">AVANT ATELIER</a></h1>
+            <ul class="all-links" id="sideMenu">
+            <li class="close-btn">
+                <label for="menu-toggler" class="close-icon"><i class="fas fa-times"></i></label>
+            </li>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../Tops.html">TOP</a></li>
+            <li><a href="../Bottoms.html">BOTTOM</a></li>
+            <li><a href="#portfolio">Inspiration</a></li>
+            <li><a href="#portfolio">Accessories</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Help</a></li>
+            </ul>
+            <div class="right-icons">
+            <a href="#"><i class="fas fa-user"></i></a>
+            <a href="#" id="searchBtn"><i class="fas fa-search"></i></a>
+            <a href="WebDesign/shopping_cart.html"><i class="fas fa-shopping-cart" aria-hidden="true"></i></a>
+            </div>
+            <div class="search-popup" id="searchPopup">
+            <div class="search-box">
+                <button class="close-search" id="closeSearch">&times;</button>
+                <h3>Search</h3>
+                <div class="search-input">
+                <input type="text" placeholder="Search products">
+                <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            </div>
+
+            <label for="menu-toggler" class="menu-overlay"></label>
+        </nav>
+        </header>
+    </body>
+</html>

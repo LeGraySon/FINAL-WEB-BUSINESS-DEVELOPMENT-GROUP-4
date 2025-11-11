@@ -1,0 +1,1042 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avant Atelier - Pass Card</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="auth.js" defer></script>
+    <style>
+      :root {
+        --orange-base: #ff5d20;
+        --card-bg: #f6f1e6;
+        --card-border: #151515;
+        --text-dark: #1c1b1b;
+        --text-muted: #5c5a58;
+        --accent: #111;
+        --tag-red: #f54747;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--card-bg);
+        color: var(--text-dark);
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        letter-spacing: 0.01em;
+      }
+
+      header.landing-header {
+        background: transparent;
+        position: sticky;
+        top: 0;
+        z-index: 20;
+      }
+
+      header.landing-header::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), transparent);
+        opacity: 0.6;
+        pointer-events: none;
+      }
+
+      .landing-header .navbar {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .landing-header .logo a {
+        font-family: inherit;
+        letter-spacing: inherit;
+      }
+
+      .landing-header .right-icons a {
+        color: #fff;
+      }
+
+      main.pass-main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 120px 20px 80px;
+        position: relative;
+      }
+
+      .pass-main::before,
+      .pass-main::after {
+        content: "";
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        border: 2px dashed rgba(0, 0, 0, 0.2);
+        opacity: 0.4;
+        pointer-events: none;
+        mix-blend-mode: screen;
+      }
+
+      .pass-main::before {
+        top: 40px;
+        left: 8%;
+      }
+
+      .pass-main::after {
+        bottom: 20px;
+        right: 10%;
+      }
+
+      .pass-card {
+        position: relative;
+        max-width: 1200px;
+        width: 100%;
+        background-color: #fcfbf7;
+        background-image: url("images/background texture.jpg");
+        background-size: cover;
+        background-repeat: repeat;
+        border-radius: 26px;
+        border: 3px solid var(--card-border);
+        box-shadow:
+          0 28px 54px rgba(0, 0, 0, 0.35),
+          0 0 0 12px rgba(0, 0, 0, 0.08);
+        padding: 48px 52px 40px;
+        overflow: hidden;
+      }
+
+      .pass-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 0) repeat-x,
+          linear-gradient(0deg, rgba(0, 0, 0, 0.08) 1px, transparent 0) repeat-y;
+        background-size: 22px 22px;
+        opacity: 0.35;
+        pointer-events: none;
+      }
+
+      .pass-card::after {
+        content: "Avant Atelier / Archive";
+        position: absolute;
+        bottom: 18px;
+        left: -64px;
+        transform: rotate(-90deg);
+        font-size: 12px;
+        letter-spacing: 0.4em;
+        color: rgba(0, 0, 0, 0.45);
+      }
+
+      .pass-card__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 24px;
+        padding-bottom: 28px;
+        border-bottom: 2px solid var(--card-border);
+      }
+
+      .pass-card__title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(38px, 5vw, 48px);
+        text-transform: uppercase;
+        letter-spacing: 0.32em;
+      }
+
+      .pass-card__meta {
+        margin-top: 12px;
+        display: grid;
+        gap: 6px;
+        font-size: 14px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .pass-card__code {
+        font-size: 14px;
+        letter-spacing: 0.52em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        white-space: nowrap;
+      }
+
+      .pass-card__body {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 40px;
+        padding-top: 36px;
+      }
+
+      .pass-card__left {
+        position: relative;
+        display: grid;
+        gap: 22px;
+        padding-right: 20px;
+        border-right: 2px solid rgba(0, 0, 0, 0.15);
+        align-content: start;
+      }
+
+      .pass-card__left > * {
+        width: 100%;
+      }
+
+      .portrait-block {
+        background: #efe7d8;
+        border-radius: 20px;
+        border: 2px solid var(--card-border);
+        padding: 24px 22px 28px;
+        display: grid;
+        gap: 16px;
+        box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+      }
+
+      .portrait-label {
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      .portrait-frame {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 2px solid var(--card-border);
+        height: 240px;
+        background: #101010;
+      }
+
+      .portrait-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .portrait-frame button {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(0, 0, 0, 0.78);
+        color: #fff;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        transition: transform 0.2s ease;
+      }
+
+      .portrait-frame button:hover {
+        transform: scale(1.08);
+      }
+
+      .look-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--tag-red);
+        color: #fff;
+        font-weight: 600;
+        font-size: 13px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        letter-spacing: 0.14em;
+        box-shadow: 0 10px 18px rgba(245, 71, 71, 0.25);
+      }
+
+      .badge-field {
+        display: grid;
+        gap: 10px;
+        font-size: 13px;
+      }
+
+      .badge-field h2 {
+        margin: 0;
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .badge-field p {
+        margin: 0;
+        color: rgba(0, 0, 0, 0.65);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .membership-stamp {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border: 1px solid var(--card-border);
+        border-radius: 999px;
+        font-size: 12px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+      }
+
+      .barcode {
+        display: flex;
+        justify-content: center;
+        padding: 12px;
+        border: 1px dashed rgba(0, 0, 0, 0.35);
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.04);
+      }
+
+      .barcode span {
+        display: block;
+        width: 100%;
+        height: 42px;
+        background: repeating-linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.9) 0 2px,
+          transparent 2px 6px,
+          rgba(0, 0, 0, 0.9) 6px 8px
+        );
+        opacity: 0.7;
+      }
+      .left-actions {
+        display: grid;
+        gap: 12px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 18px;
+        border-radius: 12px;
+        border: 2px solid var(--card-border);
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        cursor: pointer;
+        background: #fdfcf9;
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-danger {
+        background: var(--tag-red);
+        color: #fff;
+        border-color: var(--tag-red);
+      }
+
+      .pass-card__right {
+        display: grid;
+        gap: 26px;
+      }
+
+      .info-panel,
+      .orders-panel,
+      .tracking-panel {
+        border: 2px solid var(--card-border);
+        border-radius: 18px;
+        padding: 26px 28px;
+        background: #fbf8f0;
+        box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+        position: relative;
+      }
+
+      .panel-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 13px;
+      }
+
+      .panel-heading::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        margin-left: 12px;
+        background: repeating-linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.65) 0 6px,
+          transparent 6px 12px
+        );
+      }
+
+      form#profileForm {
+        margin-top: 22px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 18px 24px;
+        align-items: start;
+      }
+
+      .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .form-field label {
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .form-field--full {
+        grid-column: 1 / -1;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.18);
+        background: rgba(255, 255, 255, 0.9);
+        font-size: 15px;
+        transition: border 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: rgba(0, 0, 0, 0.6);
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18);
+      }
+
+      input[disabled] {
+        background: rgba(0, 0, 0, 0.08);
+        color: rgba(0, 0, 0, 0.6);
+        cursor: not-allowed;
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        padding-top: 6px;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+
+      table.order-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 18px;
+      }
+
+      table.order-table th,
+      table.order-table td {
+        text-align: left;
+        padding: 12px 10px;
+        font-size: 13px;
+        border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+      }
+
+      table.order-table th {
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      table.order-table tbody tr:hover {
+        background: rgba(255, 93, 32, 0.08);
+      }
+
+      .empty-state {
+        margin-top: 18px;
+        padding: 18px;
+        border: 1px dashed rgba(0, 0, 0, 0.4);
+        text-align: center;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+      }
+
+      .status-processing { background: rgba(78, 118, 228, 0.12); color: #1f3f8b; }
+      .status-packed { background: rgba(142, 184, 21, 0.16); color: #4a630d; }
+      .status-shipped { background: rgba(22, 176, 170, 0.18); color: #0b5550; }
+      .status-out { background: rgba(255, 186, 73, 0.22); color: #7a4a05; }
+      .status-delivered { background: rgba(116, 208, 132, 0.22); color: #2f6636; }
+      .status-cancelled { background: rgba(244, 96, 96, 0.22); color: #8c1f1f; }
+
+      .tracking-list {
+        margin-top: 16px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .tracking-card .tracking-item {
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        border-radius: 14px;
+        padding: 16px 18px;
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
+      }
+
+      .tracking-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      .progress-bar {
+        position: relative;
+        height: 8px;
+        background: rgba(0, 0, 0, 0.08);
+        border-radius: 999px;
+        margin: 12px 0;
+        overflow: hidden;
+      }
+
+      .progress-bar span {
+        position: absolute;
+        inset: 0;
+        width: 35%;
+        background: linear-gradient(90deg, var(--accent), rgba(0, 0, 0, 0.8));
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: rgba(0, 0, 0, 0.85);
+        color: #fff;
+        padding: 14px 18px;
+        border-radius: 12px;
+        font-size: 14px;
+        letter-spacing: 0.04em;
+        opacity: 0;
+        transform: translateY(10px);
+        pointer-events: none;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .invoice-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        z-index: 2000;
+        backdrop-filter: blur(4px);
+      }
+
+      .invoice-overlay[hidden] {
+        display: none !important;
+      }
+
+      .invoice-card {
+        width: min(460px, 92vw);
+        background: #fff;
+        border-radius: 18px;
+        padding: 28px;
+        text-align: left;
+        box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35);
+        position: relative;
+      }
+
+      .invoice-close {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        border: none;
+        background: rgba(0, 0, 0, 0.08);
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .invoice-thumbnail {
+        width: 100%;
+        height: 190px;
+        border-radius: 16px;
+        background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.15), transparent),
+          linear-gradient(135deg, #090909, #2f2f2f 45%, #0b0b0b);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        letter-spacing: 0.3em;
+        margin-bottom: 20px;
+      }
+
+      .invoice-thumbnail span {
+        letter-spacing: 0.2em;
+        font-size: 13px;
+        opacity: 0.65;
+      }
+
+      .invoice-thumbnail strong {
+        font-size: 28px;
+        letter-spacing: 0.35em;
+      }
+
+      .invoice-heading-text {
+        margin: 0 0 6px;
+        text-align: left;
+        font-size: 20px;
+      }
+
+      .invoice-summary-line {
+        font-size: 14px;
+        color: #666;
+        margin: 0 0 18px;
+      }
+
+      .invoice-list {
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 18px;
+        list-style: none;
+      }
+
+      .invoice-row {
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 10px;
+        padding: 10px 14px;
+      }
+
+      .invoice-row dt {
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: #888;
+        margin: 0 0 4px;
+      }
+
+      .invoice-row dd {
+        margin: 0;
+        font-weight: 600;
+        color: #111;
+        font-size: 14px;
+      }
+
+      .invoice-row.wide {
+        grid-column: span 2;
+      }
+
+      .invoice-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .invoice-actions button {
+        flex: 1;
+        padding: 12px 16px;
+        border-radius: 10px;
+        border: 1px solid #000;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .invoice-actions button.primary {
+        background: #000;
+        color: #fff;
+      }
+
+      @media (max-width: 1080px) {
+        .pass-card {
+          padding: 36px 32px;
+        }
+
+        .pass-card__body {
+          grid-template-columns: 1fr;
+        }
+
+        .pass-card__left {
+          border-right: none;
+          border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+          padding-bottom: 28px;
+        }
+      }
+
+      @media (max-width: 720px) {
+        main.pass-main {
+          padding: 100px 14px 60px;
+        }
+
+        .pass-card {
+          padding: 28px 20px;
+          border-width: 2px;
+        }
+
+        .pass-card__header {
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .pass-card__code {
+          letter-spacing: 0.2em;
+        }
+
+        .portrait-frame {
+          height: 220px;
+        }
+
+        .info-panel,
+        .orders-panel,
+        .tracking-panel {
+          padding: 20px;
+        }
+
+        .panel-heading {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .panel-heading::after {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+        <header class="landing-header">
+      <nav class="navbar">
+        <input type="checkbox" id="menu-toggler">
+        <label for="menu-toggler" id="hamburger-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18V11H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </label>
+
+        <h2 class="logo"><a href="index.html">AVANT ATELIER</a></h2>
+
+        <ul class="all-links" id="sideMenu">
+          <li class="close-btn">
+            <label for="menu-toggler" class="close-icon"><i class="fas fa-times"></i></label>
+          </li>
+          <li><a href="index.html#home">Home</a></li>
+          <li class="has-submenu">
+            <div class="submenu-header">
+              <a href="Products.html">Products</a>
+              <button class="submenu-control" type="button" aria-expanded="false" aria-label="Toggle products menu">
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <ul class="submenu">
+              <li><a href="top.html">Top</a></li>
+              <li><a href="bottom.html">Bottom</a></li>
+              <li><a href="accessories.html">Accessories</a></li>
+            </ul>
+          </li>
+          <li class="has-submenu inspiration-submenu">
+            <div class="submenu-header">
+              <a href="index.html#portfolio">Inspiration</a>
+              <button class="submenu-control" type="button" aria-expanded="false" aria-label="Toggle inspiration menu">
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <ul class="submenu">
+              <li><a href="news.html">News</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#contact">Help</a></li>
+        </ul>
+
+        <div class="right-icons">
+          <a
+            href="Signin.html"
+            id="userIconLink"
+            data-logged-in-href="profile.html"
+            data-logged-out-href="Signin.html"
+            data-logged-in-title="View profile"
+            data-logged-out-title="Sign in"
+          ><i class="fas fa-user"></i></a>
+          <a href="#" id="searchBtn"><i class="fas fa-search"></i></a>
+          <a href="shopping_cart.html"><i class="fas fa-shopping-cart" aria-hidden="true"></i></a>
+        </div>
+
+        <div class="search-popup" id="searchPopup">
+          <div class="search-box">
+            <button class="close-search" id="closeSearch">&times;</button>
+            <h3>Search</h3>
+            <div class="search-input">
+              <input type="text" id="searchInput" placeholder="Search products">
+            </div>
+            <div id="searchResults" class="results-container"></div>
+          </div>
+        </div>
+
+        <label for="menu-toggler" class="menu-overlay"></label>
+      </nav>
+      <script src="script.js"></script>
+      <script src="header.js"></script>
+    </header>
+
+    <main class="pass-main">
+      <div class="pass-card">
+        <div class="pass-card__header">
+          <div>
+            <div class="pass-card__title">Pass Card</div>
+            <div class="pass-card__meta">
+              <span>Brand : Avant Atelier</span>
+              <span>Season : SS2024</span>
+              <span>Type : Member Archive</span>
+            </div>
+          </div>
+          <div class="pass-card__code">
+            CODE
+            <span id="cardCode">AA-000000</span>
+          </div>
+        </div>
+
+        <div class="pass-card__body">
+          <aside class="pass-card__left">
+            <div class="portrait-block">
+              <span class="portrait-label">portrait</span>
+              <div class="portrait-frame">
+                <img id="profileAvatar" alt="Profile avatar" src="" />
+                <button type="button" id="changeAvatarBtn" title="Change portrait">
+                  <i class="fas fa-camera"></i>
+                </button>
+                <input type="file" id="avatarInput" accept="image/*" hidden />
+              </div>
+              <span class="look-tag">Look <span id="lookNumber">16</span></span>
+            </div>
+
+            <div class="badge-field">
+              <h2 id="accountName">Your Name</h2>
+              <p id="accountEmail">email@example.com</p>
+              <span class="membership-stamp">
+                <i class="fas fa-crown"></i>
+                Atelier Member
+              </span>
+            </div>
+
+            <div class="barcode">
+              <span></span>
+            </div>
+
+            <div class="left-actions">
+              <button class="btn" type="button" id="downloadSummaryBtn">
+                <i class="fas fa-file-arrow-down"></i>
+                Download Summary
+              </button>
+              <button class="btn btn-danger" type="button" id="logoutBtn">
+                <i class="fas fa-arrow-right-from-bracket"></i>
+                Log Out
+              </button>
+            </div>
+          </aside>
+
+          <section class="pass-card__right">
+            <article class="info-panel">
+              <div class="panel-heading">
+                <span>Personal dossier</span>
+                <span>Confidential</span>
+              </div>
+              <form id="profileForm" autocomplete="off" class="form-grid">
+                <div class="form-field form-field--full">
+                  <label for="displayName">Full name</label>
+                  <input type="text" id="displayName" placeholder="Your full name" required />
+                </div>
+
+                <div class="form-field form-field--full">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" disabled />
+                </div>
+
+                <div class="form-field">
+                  <label for="phone">Phone</label>
+                  <input type="tel" id="phone" placeholder="+84 90 0000 000" />
+                </div>
+
+                <div class="form-field">
+                  <label for="dob">Date of birth</label>
+                  <input type="date" id="dob" />
+                </div>
+
+                <div class="form-field form-field--full">
+                  <label for="address">Shipping address</label>
+                  <input type="text" id="address" placeholder="Street, ward" />
+                </div>
+
+                <div class="form-field">
+                  <label for="city">City</label>
+                  <input type="text" id="city" placeholder="Ho Chi Minh City" />
+                </div>
+
+                <div class="form-field">
+                  <label for="postalCode">Postal code</label>
+                  <input type="text" id="postalCode" placeholder="700000" />
+                </div>
+
+                <div class="form-field form-field--full">
+                  <label for="notes">Notes for stylist</label>
+                  <textarea id="notes" rows="3" placeholder="Preferred fit, fabric, special requests..."></textarea>
+                </div>
+
+                <div class="form-actions form-field--full">
+                  <button class="btn btn-primary" type="submit">Save</button>
+                </div>
+              </form>
+            </article>
+
+            <article class="orders-panel">
+              <div class="panel-heading">
+                <span>Order history</span>
+                <button class="btn" type="button" id="exportOrdersBtn">
+                  <i class="fas fa-table"></i>
+                  Export CSV
+                </button>
+              </div>
+
+              <div id="orderEmpty" class="empty-state" hidden>
+                No orders yet. Start exploring to generate records.
+              </div>
+
+              <table class="order-table" id="orderTable" hidden>
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Items</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="orderHistoryBody"></tbody>
+              </table>
+            </article>
+
+            <article class="tracking-panel">
+              <div class="panel-heading">
+                <span>Live tracking</span>
+                <span>Logistics feed</span>
+              </div>
+              <div class="tracking-list" id="trackingList">
+                <div class="empty-state" id="trackingEmpty">
+                  Active shipments will appear here once dispatched.
+                </div>
+              </div>
+            </article>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <div class="invoice-overlay" id="invoiceModal" hidden>
+      <div class="invoice-card" role="dialog" aria-modal="true">
+        <button class="invoice-close" id="invoiceCloseBtn" aria-label="Close invoice">
+          <i class="fas fa-times"></i>
+        </button>
+        <div class="invoice-thumbnail">
+          <span>Avant Atelier</span>
+          <strong id="invoiceThumbCode">INV</strong>
+        </div>
+        <h3 class="invoice-heading-text">Invoice snapshot</h3>
+        <p class="invoice-summary-line" id="invoiceSummaryLine">Select an order to preview its summary.</p>
+
+        <dl class="invoice-list">
+          <div class="invoice-row">
+            <dt>Order</dt>
+            <dd id="invoiceOrderId">—</dd>
+          </div>
+          <div class="invoice-row">
+            <dt>Date</dt>
+            <dd id="invoiceDateText">—</dd>
+          </div>
+          <div class="invoice-row">
+            <dt>Payment</dt>
+            <dd id="invoicePayment">—</dd>
+          </div>
+          <div class="invoice-row">
+            <dt>Status</dt>
+            <dd id="invoiceStatusText">—</dd>
+          </div>
+          <div class="invoice-row">
+            <dt>Items</dt>
+            <dd id="invoiceItemsCount">—</dd>
+          </div>
+          <div class="invoice-row">
+            <dt>Total</dt>
+            <dd id="invoiceTotalValue">—</dd>
+          </div>
+          <div class="invoice-row wide">
+            <dt>Ship to</dt>
+            <dd id="invoiceShipTo">—</dd>
+          </div>
+        </dl>
+
+        <div class="invoice-actions">
+          <button class="primary" id="invoicePrintBtn">Print</button>
+          <button id="invoiceSaveBtn">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+    <script src="profile-page.js"></script>
+
+    <script src="script.js"></script>
+    <script src="header.js"></script>
+    <script src="include-footer.js"></script>
+  </body>
+</html>
+
+

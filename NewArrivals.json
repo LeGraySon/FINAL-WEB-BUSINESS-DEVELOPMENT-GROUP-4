@@ -1,0 +1,133 @@
+[
+  {
+    "id": 101,
+    "name": "Baggy Denim",
+    "price": 25,
+    "status": "available",
+    "image": "images/Bottom/Baggy_Denim.png",
+    "hoverImage": "images/Bottom/mau_Baggy_Denim.png",
+    "gallery": [
+      "images/Bottom/Baggy_Denim.png",
+      "images/Bottom/Baggy_Denim_sau.png",
+      "images/Bottom/mau_Baggy_Denim.png"
+    ],
+    "description": "Lightweight baggy denim shorts with a relaxed fit - ideal for everyday wear and mix-and-match styling.",
+    "details": [
+      "Soft denim fabric",
+      "Unisex fit",
+      "Machine washable (gentle cycle)"
+    ],
+    "colors": ["Light Blue", "Black"],
+    "sizes": ["S", "M", "L", "XL"],
+    "category": "New Arrivals",
+    "source": "bottom"
+  },
+  {
+    "id": 102,
+    "name": "Black Deena Bustier",
+    "price": 50,
+    "status": "available",
+    "image": "images/Top/Black Deena Bustier.jpg",
+    "hoverImage": "images/Top/mau_Black_Denna_Bustier.png",
+    "gallery": [
+      "images/Top/Black Deena Bustier.jpg",
+      "images/Top/Black_Denna_Bustier_dt1.png",
+      "images/Top/mau_Black_Denna_Bustier.png"
+    ],
+    "description": "A sleek black bustier with a stretchy fabric that shapes and flatters your silhouette.",
+    "details": [
+      "Stretch polyester",
+      "Soft inner lining",
+      "Hand wash recommended"
+    ],
+    "colors": ["Black"],
+    "sizes": ["S", "M", "L"],
+    "category": "New Arrivals",
+    "source": "top"
+  },
+  {
+    "id": 103,
+    "name": "Basic Trousers",
+    "price": 159,
+    "status": "available",
+    "image": "images/Bottom/Basic Trousers.png",
+    "hoverImage": "images/Bottom/mau_Basic_Trousers.png",
+    "gallery": [
+      "images/Bottom/Basic Trousers.png",
+      "images/Bottom/mau_Basic_Trousers.png",
+      "images/Bottom/mau_Basic_Trousers (2).png"
+    ],
+    "description": "Tailored gray trousers with a neat taper and structured waistband for everyday smart wear.",
+    "details": [
+      "Mid-weight twill blend",
+      "Front pleats with clean crease"
+    ],
+    "colors": ["Gray", "Black"],
+    "sizes": ["S", "M", "L", "XL"],
+    "category": "New Arrivals",
+    "source": "bottom"
+  },
+  {
+    "id": 4 ,
+    "name": "Leather Hobo Bag",
+    "price": 189,
+    "status": "sold-out",
+    "image": "images/Accessories/Leather_Hobo_Bag.jpg",
+    "hoverImage": "images/Accessories/mau_leather_hobo_bag.png",
+    "gallery": [
+      "images/Accessories/Leather_Hobo_Bag.jpg",
+      "images/Accessories/Leather_Hobo_Bag.png",
+      "images/Accessories/mau_leather_hobo_bag.png"
+    ],
+    "description": "Slouchy hobo silhouette in supple leather for effortless elegance.",
+    "details": ["Top zipper closure", "Removable shoulder strap"],
+    "colors": ["Tan"],
+    "sizes": ["One Size"],
+    "category": "New Arrivals",
+    "source": "accessory"
+  },
+  {
+    "id": 105,
+    "name": "Striped Cuban Shirt",
+    "price": 119,
+    "status": "available",
+    "image": "images/Top/shirt1_truoc.png",
+    "hoverImage": "images/Top/mau_shirt1.png",
+    "gallery": [
+      "images/Top/shirt1_truoc.png",
+      "images/Top/shirt1_sau.png",
+      "images/Top/mau_shirt1.png"
+    ],
+    "description": "Classic Cuban-collar striped shirt made from lightweight cotton - a summer essential.",
+    "details": ["100% cotton", "Cuban collar", "Breathable fabric"],
+    "colors": ["White", "Blue"],
+    "sizes": ["S", "M", "L", "XL"],
+    "category": "New Arrivals",
+    "source": "top"
+  },
+  {
+    "id": 106,
+    "name": "Leather Gile",
+    "price": 83,
+    "status": "available",
+    "image": "images/Top/Leather Gile.png",
+    "hoverImage": "images/Top/mau_Leather_Gile.png",
+    "gallery": [
+      "images/Top/Leather Gile.png",
+      "images/Top/Leather_Gile_dt1.png",
+      "images/Top/mau2_Leather_Gile.png",
+      "images/Top/Leather_Gile_Brown.png",
+      "images/Top/mau_Leather_Gile.png"
+    ],
+    "description": "Premium faux-leather gilet with a vintage cut - a statement piece for a bold look.",
+    "details": [
+      "High-quality synthetic leather",
+      "Vintage silhouette",
+      "Detailed stitching"
+    ],
+    "colors": ["Brown", "Black"],
+    "sizes": ["S", "M", "L"],
+    "category": "New Arrivals",
+    "source": "top"
+  }
+]

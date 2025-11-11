@@ -1,0 +1,494 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Classic Polo - Navy",
+    "price": 89,
+    "status": "available",
+    "image": "images/Top/Polo1_truoc.png",
+    "hoverImage": "images/Top/Polo1_sau.png",
+    "gallery": [
+      "images/Top/Polo1_truoc.png",
+      "images/Top/Polo1_sau.png",
+      "images/Top/mau_Polo.png"
+    ],
+    "description": "Breathable cotton pique polo with contrast tipping along the collar and cuffs.",
+    "details": [
+      "Medium weight 210 gsm pique knit",
+      "Two button placket with reinforced seams"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Navy", "White tipping"]
+  },
+  {
+    "id": 2,
+    "name": "Classic Polo - Cream",
+    "price": 89,
+    "salePrice": 72,
+    "status": "available",
+    "image": "images/Top/polo2_truoc.png",
+    "hoverImage": "images/Top/polo2_sau.png",
+    "gallery": [
+      "images/Top/polo2_truoc.png",
+      "images/Top/polo2_sau.png",
+      "images/Top/mau_polo2.png"
+    ],
+    "description": "Soft touch polo knit with subtle contrast piping and ribbed collar for a polished look.",
+    "details": [
+      "Mercerized cotton for lasting color",
+      "Side vents keep the fit easy and relaxed"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Cream", "Taupe"]
+  },
+  {
+    "id": 3,
+    "name": "Oxford Shirt - Slate",
+    "price": 119,
+    "status": "available",
+    "image": "images/Top/shirt1_truoc.png",
+    "hoverImage": "images/Top/shirt1_sau.png",
+    "gallery": [
+      "images/Top/shirt1_truoc.png",
+      "images/Top/shirt1_sau.png",
+      "images/Top/mau_shirt1.png"
+    ],
+    "description": "Structured oxford shirt with a modern cut and subtle contrast buttons.",
+    "details": [
+      "Enzyme washed for a broken in feel",
+      "Button down collar maintains a clean shape"
+    ],
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "colors": ["Slate"]
+  },
+  {
+    "id": 4,
+    "name": "Utility Overshirt - Olive",
+    "price": 125,
+    "salePrice": 99,
+    "status": "available",
+    "image": "images/Top/shirt2_truoc.png",
+    "hoverImage": "images/Top/shirt2_sau.png",
+    "gallery": [
+      "images/Top/shirt2_truoc.png",
+      "images/Top/shirt2_sau.png",
+      "images/Top/mau_shirt2.png"
+    ],
+    "description": "Durable twill overshirt with utility pockets and tonal hardware for easy layering.",
+    "details": [
+      "Reinforced elbow patches for extra wear",
+      "Hidden snap closures under the placket"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Olive"]
+  },
+  {
+    "id": 5,
+    "name": "Weekend Poplin Shirt - White",
+    "price": 109,
+    "salePrice": 92,
+    "status": "available",
+    "image": "images/Top/shirt4_truoc.png",
+    "hoverImage": "images/Top/shirt4_sau.png",
+    "gallery": [
+      "images/Top/shirt4_truoc.png",
+      "images/Top/shirt4_sau.png",
+      "images/Top/mau_shirt4.png"
+    ],
+    "description": "Lightweight poplin shirt with a relaxed drape and curved hem for versatile styling.",
+    "details": [
+      "Organic cotton weave",
+      "Contrast bar tack stitching at the side seams"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["White"]
+  },
+  {
+    "id": 6,
+    "name": "Textured Shirt - Sand",
+    "price": 115,
+    "status": "available",
+    "image": "images/Top/shirt5_truoc.png",
+    "hoverImage": "images/Top/shirt5_sau.png",
+    "gallery": [
+      "images/Top/shirt5_truoc.png",
+      "images/Top/shirt5_sau.png",
+      "images/Top/mau_shirt5.png"
+    ],
+    "description": "Soft textured weave with a matte finish and laid back camp collar detailing.",
+    "details": [
+      "Blend of cotton and lyocell for comfort",
+      "Camp collar finished with stay stitches"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Sand", "Ecru"]
+  },
+  {
+    "id": 7,
+    "name": "Ribbed Knit Sweater - Charcoal",
+    "price": 139,
+    "status": "available",
+    "image": "images/Top/sweater2_truoc.png",
+    "hoverImage": "images/Top/sweater2_sau.png",
+    "gallery": [
+      "images/Top/sweater2_truoc.png",
+      "images/Top/sweater2_sau.png",
+      "images/Top/mau_sweater2.png"
+    ],
+    "description": "Chunky rib knit sweater with drop shoulders and refined rolled cuffs.",
+    "details": [
+      "Wool blend yarn keeps warmth without weight",
+      "Fully fashioned seams for a clean inside finish"
+    ],
+    "sizes": ["S", "M", "L"],
+    "colors": ["Charcoal"]
+  },
+  {
+    "id": 8,
+    "name": "Fisherman Sweater - Navy",
+    "price": 139,
+    "status": "available",
+    "image": "images/Top/sweater3_truoc.png",
+    "hoverImage": "images/Top/sweater3_sau.png",
+    "gallery": [
+      "images/Top/sweater3_truoc.png",
+      "images/Top/sweater3_sau.png",
+      "images/Top/mau_sweater3.png"
+    ],
+    "description": "Heritage fisherman stitch in a relaxed silhouette with rib trims.",
+    "details": [
+      "Seed stitch body with cable panels",
+      "Pre washed to minimize shrinkage"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Cream"]
+  },
+  {
+    "id": 9,
+    "name": "Everyday Zip Hoodie - Charcoal",
+    "price": 149,
+    "status": "available",
+    "image": "images/Top/hoodie_truoc.webp",
+    "hoverImage": "images/Top/hoodie_sau.png",
+    "gallery": [
+      "images/Top/hoodie_truoc.webp",
+      "images/Top/hoodie_sau.png",
+      "images/Top/mau_hoodie.png"
+    ],
+    "description": "Double knit zip hoodie with clean lines and concealed hand pockets.",
+    "details": [
+      "Recycled polyester fleece interior",
+      "Two way zipper for flexible styling"
+    ],
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "colors": ["Charcoal"]
+  },
+  {
+    "id": 10,
+    "name": "Minimalist Hoodie - Sage",
+    "price": 145,
+    "status": "available",
+    "image": "images/Top/hoodie2_truoc.png",
+    "hoverImage": "images/Top/hoodie2_sau.png",
+    "gallery": [
+      "images/Top/hoodie2_truoc.png",
+      "images/Top/hoodie2_sau.png",
+      "images/Top/mau_hoodie2.png"
+    ],
+    "description": "Brushed fleece hoodie with tonal drawcords and dropped shoulder seams.",
+    "details": [
+      "Soft loopback interior",
+      "Rib side panels allow easy movement"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Sage"]
+  },
+  {
+    "id": 11,
+    "name": "Essential Rib Tank - Black",
+    "price": 39,
+    "status": "available",
+    "image": "images/Top/aobaloden_truoc.png",
+    "hoverImage": "images/Top/aobaloden_sau.png",
+    "gallery": [
+      "images/Top/aobaloden_truoc.png",
+      "images/Top/aobaloden_sau.png",
+      "images/Top/mau_aobaloden.png"
+    ],
+    "description": "Streamlined rib tank crafted from breathable stretch cotton for everyday layering.",
+    "details": [
+      "Wide binding keeps the neckline and armholes lying flat",
+      "Garment prewashed to resist shrinking after wears"
+    ],
+    "sizes": ["XS", "S", "M", "L"],
+    "colors": ["Black"]
+  },
+  {
+    "id": 12,
+    "name": "Essential Rib Tank - Ivory",
+    "price": 39,
+    "status": "available",
+    "image": "images/Top/aobalo_truoc.png",
+    "hoverImage": "images/Top/aobalo_sau.png",
+    "gallery": [
+      "images/Top/aobalo_truoc.png",
+      "images/Top/aobalo_sau.png",
+      "images/Top/mau_aobalo.png"
+    ],
+    "description": "Soft rib-knit tank with a close fit and subtle sheen that elevates basic outfits.",
+    "details": [
+      "Cotton-modal blend adds drape and softness",
+      "Bound edges stay smooth under layers"
+    ],
+    "sizes": ["XS", "S", "M", "L"],
+    "colors": ["Ivory"]
+  },
+  {
+    "id": 13,
+    "name": "Transit Bomber Jacket - Graphite",
+    "price": 189,
+    "status": "available",
+    "image": "images/Top/aokhoac2_truoc.png",
+    "hoverImage": "images/Top/aokhoac2_sau.png",
+    "gallery": [
+      "images/Top/aokhoac2_truoc.png",
+      "images/Top/aokhoac2_sau.png",
+      "images/Top/mau_aokhoac2.png"
+    ],
+    "description": "Lightweight bomber with tonal rib trims and a water-repellent shell for on-the-go comfort.",
+    "details": [
+      "Quilted lining adds warmth without bulk",
+      "Utility sleeve pocket with matte zipper pull"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Graphite"]
+  },
+  {
+    "id": 14,
+    "name": "Insulated Field Jacket - Moss",
+    "price": 229,
+    "status": "available",
+    "image": "images/Top/aokhoac3_truoc.png",
+    "hoverImage": "images/Top/aokhoac3_sau.png",
+    "gallery": [
+      "images/Top/aokhoac3_truoc.png",
+      "images/Top/aokhoac3_sau.png",
+      "images/Top/mau_aokhoac3.webp"
+    ],
+    "description": "Modern field jacket with bellow pockets and a removable quilted liner for modular warmth.",
+    "details": [
+      "Storm flap conceals the two-way zip",
+      "Adjustable waist tabs customize the fit"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Moss"]
+  },
+  {
+    "id": 15,
+    "name": "City Shell Jacket - Charcoal",
+    "price": 179,
+    "status": "available",
+    "image": "images/Top/khoac_truoc.png",
+    "hoverImage": "images/Top/khoac_sau.png",
+    "gallery": [
+      "images/Top/khoac_truoc.png",
+      "images/Top/khoac_sau.png",
+      "images/Top/mau_khoac.png"
+    ],
+    "description": "Versatile shell jacket with taped seams and welt pockets for a clean, technical finish.",
+    "details": [
+      "Three-layer fabric blocks wind and drizzle",
+      "Interior media pocket keeps essentials secure"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Charcoal"]
+  },
+  {
+    "id": 16,
+    "name": "Graphic Ringer Tee - Bone",
+    "price": 65,
+    "status": "available",
+    "image": "images/Top/T-shirt4_truoc.png",
+    "hoverImage": "images/Top/T-shirt4_sau.png",
+    "gallery": [
+      "images/Top/T-shirt4_truoc.png",
+      "images/Top/T-shirt4_sau.png",
+      "images/Top/mau_T-shirt4.jpg"
+    ],
+    "description": "Vintage-inspired ringer tee with retro graphic print and contrast rib neckline.",
+    "details": [
+      "Combed cotton jersey feels soft from day one",
+      "Cover-stitched hems hold their shape wash after wash"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Bone", "Charcoal trim"]
+  },
+  {
+    "id": 17,
+    "name": "Everyday Crew Tee - Slate",
+    "price": 55,
+    "status": "available",
+    "image": "images/Top/T-shirt5_truoc.png",
+    "hoverImage": "images/Top/T-shirt5_sau.png",
+    "gallery": [
+      "images/Top/T-shirt5_truoc.png",
+      "images/Top/T-shirt5_sau.png",
+      "images/Top/mau_T-shirt5.webp"
+    ],
+    "description": "Essential crewneck tee cut with a relaxed drape and garment-dyed finish for depth.",
+    "details": [
+      "Ring-spun cotton with a breathable weight",
+      "Shoulder-to-shoulder taping prevents stretching"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Slate"]
+  },
+  {
+    "id": 18,
+    "name": "Silk Utility Jacket - Ivory",
+    "price": 189,
+    "status": "sold-out",
+    "image": "images/Top/Silkjacket_truoc.png",
+    "hoverImage": "images/Top/Silkjacket_dt1.png",
+    "gallery": [
+      "images/Top/Silkjacket_truoc.png",
+      "images/Top/Silkjacket_dt1.png",
+      "images/Top/Silkjacket_dt2.png",
+      "images/Top/mau_Silkjacket.png"
+    ],
+    "description": "Supple silk-blend utility jacket with a relaxed drape and tonal hardware for elevated layering.",
+    "details": [
+      "Fully lined body with smooth satin finish",
+      "Adjustable waist tabs tailor the silhouette"
+    ],
+    "sizes": ["XS", "S", "M", "L"],
+    "colors": ["Ivory"]
+  },
+  {
+    "id": 19,
+    "name": "Denim Trucker Jacket - Indigo",
+    "price": 145,
+    "salePrice": 129,
+    "status": "available",
+    "image": "images/Top/Denim_jacket_truoc.jpg",
+    "hoverImage": "images/Top/Denim_jacket_sau.jpg",
+    "gallery": [
+      "images/Top/Denim_jacket_truoc.jpg",
+      "images/Top/Denim_jacket_sau.jpg",
+      "images/Top/mau_aobalo.png"
+    ],
+    "description": "Classic indigo trucker jacket washed for softness with subtle whiskering at the seams.",
+    "details": [
+      "Mid-weight denim with a hint of stretch",
+      "Antiqued metal hardware for a broken-in feel"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Indigo"]
+  },
+  {
+    "id": 20,
+    "name": "Denim Trucker Jacket - Washed Black",
+    "price": 149,
+    "salePrice": 132,
+    "status": "available",
+    "image": "images/Top/denim_jacket_black_truoc.png",
+    "hoverImage": "images/Top/denim_jacket_black_sau.jpg",
+    "gallery": [
+      "images/Top/denim_jacket_black_truoc.png",
+      "images/Top/denim_jacket_black_sau.jpg",
+      "images/Top/mau_aobaloden.png"
+    ],
+    "description": "Washed black take on the trucker with tonal stitching and modern cropped length.",
+    "details": [
+      "Rigid 12 oz denim softens with each wear",
+      "Side entry hand pockets keep the profile clean"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Washed black"]
+  },
+  {
+    "id": 21,
+    "name": "Leather Gile - Onyx",
+    "price": 215,
+    "salePrice": 189,
+    "status": "available",
+    "image": "images/Top/Leather Gile.png",
+    "hoverImage": "images/Top/Leather_Gile_dt1.png",
+    "gallery": [
+      "images/Top/Leather Gile.png",
+      "images/Top/Leather_Gile_dt1.png",
+      "images/Top/Leather_Gile_td2.png",
+      "images/Top/mau2_Leather_Gile.png"
+    ],
+    "description": "Sleek leather gilet with quilted channels and a funnel collar for transitional weather.",
+    "details": [
+      "Soft nappa exterior with light insulation",
+      "Two-way front zip for flexible layering"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Onyx"]
+  },
+  {
+    "id": 22,
+    "name": "Leather Gile - Saddle Brown",
+    "price": 215,
+    "status": "sold-out",
+    "image": "images/Top/Leather_Gile_Brown.png",
+    "hoverImage": "images/Top/Leather_Gile_dt1.png",
+    "gallery": [
+      "images/Top/Leather_Gile_Brown.png",
+      "images/Top/Leather_Gile_dt1.png",
+      "images/Top/Leather_Gile_td2.png",
+      "images/Top/mau_Leather_Gile.png"
+    ],
+    "description": "Warm brown leather gilet with sculpted quilting and tonal zip hardware.",
+    "details": [
+      "Supple leather with lightweight padding",
+      "Hidden side pockets keep essentials secure"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Saddle brown"]
+  },
+  {
+    "id": 23,
+    "name": "Rib Knit Polo - Taupe",
+    "price": 98,
+    "status": "available",
+    "image": "images/Top/rib_polo_shirt_truoc.png",
+    "hoverImage": "images/Top/rib_polo_shirt_sau.png",
+    "gallery": [
+      "images/Top/rib_polo_shirt_truoc.png",
+      "images/Top/rib_polo_shirt_sau.png",
+      "images/Top/mau_rib_polo_shirt.png"
+    ],
+    "description": "Fitted rib knit polo with open collar and elongated short sleeves for a sleek profile.",
+    "details": [
+      "Viscose blend moves with the body",
+      "Linked seams lay flat against the skin"
+    ],
+    "sizes": ["XS", "S", "M", "L"],
+    "colors": ["Warm taupe"]
+  },
+  {
+    "id": 24,
+    "name": "Waffle Henley Tee - Oat",
+    "price": 72,
+    "salePrice": 59,
+    "status": "available",
+    "image": "images/Top/waffle_longsleeves_t-shirt_truoc.png",
+    "hoverImage": "images/Top/waffle_longsleeves_t-shirt_truoc.jpg",
+    "gallery": [
+      "images/Top/waffle_longsleeves_t-shirt_truoc.png",
+      "images/Top/waffle_longsleeves_t-shirt_truoc.jpg",
+      "images/Top/mau_waffle_longsleeves_t-shirt.png"
+    ],
+    "description": "Textured waffle knit henley with tonal buttons and a relaxed straight hem.",
+    "details": [
+      "Cotton-modal blend keeps warmth without weight",
+      "Elasticized cuffs stay put when sleeves are pushed up"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Oat"]
+  }
+]
+
+
