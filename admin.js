@@ -352,6 +352,54 @@
     els.invoiceCloseBtn?.addEventListener("click", closeInvoiceModal);
     els.invoicePrintBtn?.addEventListener("click", printInvoice);
     els.invoiceSaveBtn?.addEventListener("click", saveInvoice);
+    els.exportBtn?.addEventListener("click", () => {
+  try {
+    const now = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
+    const filename = `customer-report-${now}.csv`;
+    const filtered = filterCustomers();
+    if (!filtered.length) {
+      alert(" No customers to export with current filters.");
+      return;
+    }
+    const header = [
+      "Name",
+      "Email",
+      "Tier",
+      "Spend",
+      "Last Order",
+      "Status",
+      "Items",
+      "City",
+      "Payment"
+    ];
+    const rows = filtered.map((c) => [
+      `"${c.name}"`,
+      `"${c.email}"`,
+      `"${c.tier}"`,
+      c.spend,
+      `"${c.lastOrder}"`,
+      `"${c.status}"`,
+      c.items,
+      `"${c.city}"`,
+      `"${c.payment}"`
+    ]);
+    const csvContent = [header.join(","), ...rows.map((r) => r.join(","))].join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+    alert("Export successful! Check your downloads for the report.");
+  } catch (err) {
+    console.error("Export failed:", err);
+    alert(" Export failed. See console for details.");
+  }
+});
+
   });
   const PRODUCT_STORAGE_KEY = "productList";
 
@@ -378,6 +426,6 @@
     window.dispatchEvent(new Event("productListUpdated"));
   }
 
-  console.log("📦 Current products:", getProductList());
+  console.log(" Current products:", getProductList());
 
 })();
